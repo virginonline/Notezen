@@ -1,9 +1,9 @@
 'use client'
 import {useState} from "react";
 import welcomeScreen from "@/lib/web/state/ui/welcome";
-import {Badge} from "@/component/ui/badge";
 import {Editor} from "@/component/editor";
 export default function Home() {
+
     const [markdown, setMarkdown] = useState<string>('')
     const {greeting, welcome} = welcomeScreen();
     return (
@@ -18,6 +18,7 @@ export default function Home() {
         text-black
         '
             >{welcome}</h1> */}
+
             <Editor/>
         </main>
     )
