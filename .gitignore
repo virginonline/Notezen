@@ -8,6 +8,7 @@
 /backend/.gradle
 /backend/build/
 /backend/.idea
+/backend/.env
 /backend/**/src/main/**/build/
 /backend/**/src/test/**/build/
 !backend/gradle/wrapper/gradle-wrapper.jar
