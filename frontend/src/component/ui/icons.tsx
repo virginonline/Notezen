@@ -23,6 +23,7 @@ import {
     Twitter,
     User,
     X,
+    Folder,
     type Icon as LucideIcon,
   } from "lucide-react"
   
@@ -31,6 +32,7 @@ import {
   export const Icons = {
     logo: Command,
     close: X,
+    project: Folder,
     spinner: Loader2,
     chevronLeft: ChevronLeft,
     chevronRight: ChevronRight,

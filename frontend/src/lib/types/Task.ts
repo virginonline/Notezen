@@ -3,5 +3,6 @@ export type Task = {
     title:string,
     description:string,
     status:string,
+    project: string,
     author:string,
 }
