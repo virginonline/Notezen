@@ -1,5 +1,6 @@
 package com.virginonline.backend.service.impl;
 
+import com.virginonline.backend.domain.project.EProjectStatus;
 import com.virginonline.backend.domain.project.Project;
 import com.virginonline.backend.domain.project.ProjectsStatus;
 import com.virginonline.backend.domain.user.User;
@@ -8,7 +9,7 @@ import com.virginonline.backend.repository.ProjectRepository;
 import com.virginonline.backend.repository.ProjectStatusRepository;
 import com.virginonline.backend.repository.UserRepository;
 import com.virginonline.backend.service.IProjectService;
-import com.virginonline.mapper.ProjectMapper;
+import com.virginonline.backend.mapper.ProjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class ProjectService implements IProjectService {
     private final ProjectMapper projectMapper;
     @Override
     public ProjectDto addProject(ProjectDto projectDto) {
-        ProjectsStatus projectsStatus = projectStatusRepository.findByTitle(projectDto.getStatus());
+        ProjectsStatus projectsStatus = projectStatusRepository.findByStatus(EProjectStatus.findValue(projectDto.getStatus()));
         User user = userRepository.findByUsername(projectDto.getOwner()).orElseThrow();
         Project project = projectMapper.toEntity(projectDto);
         project.setProjectStatus(projectsStatus);

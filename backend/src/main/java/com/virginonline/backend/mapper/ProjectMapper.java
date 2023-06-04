@@ -1,4 +1,4 @@
-package com.virginonline.mapper;
+package com.virginonline.backend.mapper;
 
 import com.virginonline.backend.domain.project.Project;
 import com.virginonline.backend.dto.ProjectDto;

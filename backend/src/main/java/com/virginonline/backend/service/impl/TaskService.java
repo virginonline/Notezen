@@ -4,16 +4,19 @@ import com.virginonline.backend.domain.project.Project;
 import com.virginonline.backend.domain.task.Task;
 import com.virginonline.backend.domain.task.TaskPriority;
 import com.virginonline.backend.domain.task.TasksStatus;
+import com.virginonline.backend.domain.task.enums.ETaskPriority;
+import com.virginonline.backend.domain.task.enums.ETaskStatus;
 import com.virginonline.backend.domain.user.User;
 import com.virginonline.backend.dto.TaskDto;
 import com.virginonline.backend.repository.*;
 import com.virginonline.backend.service.ITaskService;
-import com.virginonline.mapper.TaskMapper;
+import com.virginonline.backend.mapper.TaskMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -37,8 +40,8 @@ public class TaskService implements ITaskService {
 
         User owner = userRepository.findByUsername(taskDto.getCreatedBy()).orElseThrow();
         Project project = projectRepository.findByTitle(taskDto.getProject()).orElseThrow();
-        TaskPriority priority = taskPriorityRepository.findByPriority(taskDto.getPriority());
-        TasksStatus status = taskStatusRepository.findByTitle(taskDto.getStatus());
+        TasksStatus status = taskStatusRepository.findByStatus(ETaskStatus.findValue(taskDto.getStatus()));
+        TaskPriority priority = taskPriorityRepository.findByPriority(ETaskPriority.findValue(taskDto.getPriority()));
 
         task.setCreatedBy(owner);
         task.setStatus(status);
@@ -51,8 +54,8 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public TaskDto assignTask(String username, TaskDto taskDto) {
-        Task task = taskRepository.findById(taskDto.getId()).orElseThrow();
+    public TaskDto assignTask(Long taskId, String username) {
+        Task task = taskRepository.findById(taskId).orElseThrow();
         User u = userRepository.findByUsername(username).orElseThrow();
         task.setAssignedTo(u);
         return taskMapper.toDto(taskRepository.save(task));

@@ -1,4 +1,4 @@
-package com.virginonline.mapper;
+package com.virginonline.backend.mapper;
 
 import com.virginonline.backend.domain.user.User;
 import com.virginonline.backend.dto.UserDto;

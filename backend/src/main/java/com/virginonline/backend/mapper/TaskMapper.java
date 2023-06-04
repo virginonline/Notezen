@@ -1,11 +1,10 @@
-package com.virginonline.mapper;
+package com.virginonline.backend.mapper;
 
 import com.virginonline.backend.domain.task.Task;
 import com.virginonline.backend.dto.TaskDto;
 import org.mapstruct.*;
 
 import java.util.List;
-
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface TaskMapper {
     Task toEntity(TaskDto taskDto);

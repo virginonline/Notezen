@@ -11,7 +11,9 @@ import java.util.List;
 @RequestMapping("/tasks")
 @RequiredArgsConstructor
 public class TaskController {
+
     private final TaskService taskService;
+
     @GetMapping("/user/{userId}")
     public List<TaskDto> getTasksByUser(@PathVariable("userId") Long id) {
         return taskService.getUserTasks(id);
@@ -25,4 +27,9 @@ public class TaskController {
     public TaskDto update(@RequestBody TaskDto task) {
         return null;
     }
+    @PatchMapping("/{taskId}")
+    public TaskDto assignTo(@PathVariable Long taskId, @RequestParam String username) {
+        return taskService.assignTask(taskId, username);
+    }
+
 }

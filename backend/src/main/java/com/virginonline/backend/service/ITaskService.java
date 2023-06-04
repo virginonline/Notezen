@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ITaskService {
     TaskDto addTask(TaskDto taskDto);
-    TaskDto assignTask(String username, TaskDto task);
+    TaskDto assignTask(Long taskId, String username);
     List<TaskDto> getProjectTasks(Long projectId);
     List<TaskDto> getUserTasks(Long userId);
     Boolean removeTask(Long id);
