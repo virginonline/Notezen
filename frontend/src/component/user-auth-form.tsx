@@ -3,7 +3,7 @@
 import { authSchema } from "@/lib/validation/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import {HTMLAttributes, useState} from "react";
 import { useForm, useFormState } from "react-hook-form";
 import * as z from "zod";
 import { Label } from "./ui/label";
@@ -11,8 +11,11 @@ import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { Icons } from "./ui/icons";
+import {signIn} from "next-auth/react";
+import ky from "ky";
+import {json} from "stream/consumers";
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
+interface UserAuthFormProps extends HTMLAttributes<HTMLDivElement> {
   label: string
 }
 
@@ -30,7 +33,22 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const searchParams = useSearchParams();
 
   async function onSubmit(data: FormData) {
-    // TODO: sign in
+    setIsLoading(true)
+    const register= await ky.post("http://localhost:8083/api/v1/auth/register",
+        {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          json: {
+            username: data.username,
+            password: data.password
+          }
+        }
+    ).json();
+    alert(JSON.stringify(register))
+
+    setIsLoading(false);
   }
 
   return (

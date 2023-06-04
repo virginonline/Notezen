@@ -5,9 +5,10 @@ import { SiteFooter } from "@/component/site-footer"
 import { buttonVariants } from "@/component/ui/button"
 import { MainNav } from "@/component/main-nav"
 import { mainNavConfig } from "@/lib/config/mainNav"
+import {ReactNode} from "react";
 
 interface MarketingLayoutProps {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export default async function MarketingLayout({

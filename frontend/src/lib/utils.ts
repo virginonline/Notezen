@@ -17,7 +17,15 @@ export function formatDate(input: string | number): string {
 
 export function absoluteUrl(path: string) {
 }
-
+export async function getGreeting(h: number): Promise<string> {
+	if (h < 12) {
+		return ("Доброе утро");
+	} else if (h < 18) {
+		return ("Добрый день");
+	} else {
+		return "Добрый вечер";
+	}
+}
 export const transformCount = (count: number) => {
 	if (count == 0) {
 		return 0

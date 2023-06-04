@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { SelectLabel } from "@radix-ui/react-select";
+import {toast, useToast} from "@/component/ui/use-toast";
 
 interface EditorProps {
   task: Pick<Task, "id" | "title" | "description" | "author">;
@@ -34,6 +35,7 @@ export function Editor() {
     resolver: zodResolver(taskSchema),
   });
   const router = useRouter();
+  const {toast} = useToast();
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const initEditor = useCallback(async () => {
@@ -70,10 +72,10 @@ export function Editor() {
   }, [isMounted, initEditor]);
   async function onSubmit(data: formData) {
     setIsSaving(true);
-    const blocks = await ref.current?.save();
+    const editorData = await ref.current?.save();
     const response = {
       title: data.title,
-      content: blocks,
+      content: editorData?.blocks,
       project: data.project,
       priority: data.priority,
       status: data.status,
@@ -83,11 +85,11 @@ export function Editor() {
     alert(response);
   }
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
       <div className="grid w-full gap-10 py-3">
         <div className="flex w-full items-center justify-between">
           <div className="flex items-center space-x-10">
-            <Link href="/" className={cn(buttonVariants({ variant: "ghost" }))}>
+            <Link href="/dashboard" className={cn(buttonVariants({ variant: "ghost" }))}>
               <>
                 <Icons.chevronLeft className="mr-2 h-4 w-4" />
                 Назад

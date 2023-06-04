@@ -24,8 +24,9 @@ import {
     User,
     X,
     Folder,
+    Circle,
     type Icon as LucideIcon,
-  } from "lucide-react"
+} from "lucide-react"
   
   export type Icon = LucideIcon
   
@@ -40,6 +41,7 @@ import {
     post: FileText,
     page: File,
     media: Image,
+    circle: Circle,
     settings: Settings,
     billing: CreditCard,
     ellipsis: MoreVertical,
