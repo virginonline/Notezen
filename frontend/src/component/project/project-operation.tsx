@@ -1,6 +1,6 @@
 "use client"
 
-import {Project} from "@/lib/types/Project";
+import {Project} from "@/lib/types/type";
 import {useRouter} from "next/navigation";
 import {useState} from "react";
 import { toast } from "@/component/ui/use-toast"

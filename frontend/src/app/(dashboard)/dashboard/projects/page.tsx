@@ -4,7 +4,7 @@ import ProjectsCreateButton from "@/component/projects-create-button";
 import {Button, buttonVariants} from "@/component/ui/button";
 import {cn} from "@/lib/utils";
 import {Icons} from "@/component/ui/icons";
-import {Project} from "@/lib/types/Project";
+import {Project} from "@/lib/types/type";
 import {ProjectItemList} from "@/component/project/project-item-list";
 
 export default async function ProjectsPage() {

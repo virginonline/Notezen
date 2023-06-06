@@ -1,6 +1,6 @@
 "use client";
 import "@/styles/editor.css";
-import { Task } from "@/lib/types/Task";
+import { Task } from "@/lib/types/type";
 import { useCallback, useEffect, useRef, useState } from "react";
 import EditorJS from "@editorjs/editorjs";
 import { zodResolver } from "@hookform/resolvers/zod";

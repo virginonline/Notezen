@@ -1,5 +1,6 @@
 import NextAuth, {NextAuthOptions, User} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import {api} from "@/lib/api";
 export const authOption : NextAuthOptions = {
     session: {
         strategy: "jwt"
@@ -15,7 +16,12 @@ export const authOption : NextAuthOptions = {
                 password: {label:"password", type:"password", placeholder: "password"}
             },
             async authorize(credentials)    {
-                const user = {id : "1", username: "bebra"}
+                const user : {id:string, username : string} = await api.post('auth/login', {
+                    json: {
+                        username: credentials?.username,
+                        password: credentials?.password
+                    }
+                }).json();
                 if(user) {
                     return user;
                 } else {

@@ -1,4 +1,4 @@
-import {Task} from "@/lib/types/Task";
+import {Task} from "@/lib/types/type";
 import {TaskItem} from "@/component/task/task-item";
 
 interface TaskItemListProps {
