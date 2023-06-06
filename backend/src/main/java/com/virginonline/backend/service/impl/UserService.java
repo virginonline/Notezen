@@ -23,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class UserService implements IUserService {
 
     private final PasswordEncoder passwordEncoder ;
     private final JwtUtilities jwtUtilities ;
+
 
     @Override
     public String authenticate(LoginDto login) {
@@ -65,13 +67,13 @@ public class UserService implements IUserService {
         user.setUsername(register.getUsername());
         user.setPassword(passwordEncoder.encode(register.getPassword()));
         user.setRole(role);
+        user.setCreatedDate(Instant.now());
+        user.setUpdatedDate(Instant.now());
         List<String> array = new ArrayList<>();
         array.add(user.getRole().getName().toString());
         String token = jwtUtilities.generateToken(user.getUsername(), array);
-
+        userRepository.save(user);
         log.info("UserService : Token created : {}", token);
         return new ResponseEntity<>(new BearerToken(token, "Bearer "), HttpStatus.OK);
     }
-
-
 }

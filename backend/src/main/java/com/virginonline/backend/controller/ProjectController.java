@@ -13,14 +13,16 @@ import java.util.List;
 @RequestMapping("/projects")
 @RequiredArgsConstructor
 public class ProjectController {
+
     private final ProjectService projectService;
 
-    @PostMapping
-    public ProjectDto createProject(@RequestBody ProjectDto project) {
+
+    @PostMapping("/new")
+    public Project createProject(@RequestBody ProjectDto project) {
        return projectService.addProject(project);
     }
     @GetMapping("/user/{userId}")
-    public List<ProjectDto> getProjectsByUser(@PathParam("userId") Long id) {
+    public List<Project> getProjectsByUser(@PathParam("userId") Long id) {
         return projectService.getUserProjects(id);
     }
 }

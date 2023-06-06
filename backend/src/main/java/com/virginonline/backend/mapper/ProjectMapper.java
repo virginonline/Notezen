@@ -1,19 +1,19 @@
 package com.virginonline.backend.mapper;
 
+
 import com.virginonline.backend.domain.project.Project;
 import com.virginonline.backend.dto.ProjectDto;
 import org.mapstruct.*;
 
-import java.util.List;
-
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = "spring")
 public interface ProjectMapper {
-    Project toEntity(ProjectDto projectDto);
-    ProjectDto toDto(Project projectDto);
-    @Mapping(source = "createdByUsername", target = "createdBy.username")
-    List<Project> toProjectListEntity(List<ProjectDto> projectsDto);
+    @Mapping(source = "projectStatus.status", target = "status")
     @Mapping(source = "createdBy.username", target = "owner")
-    List<ProjectDto> toProjectListDto(List<Project> projects);
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Project partialUpdate(ProjectDto projectDto, @MappingTarget Project project);
+    @Mapping(source = "tasks", target = "tasks", ignore = true)
+    ProjectDto toDto(Project project);
+
+    @Mapping(source = "tasks", target = "tasks", ignore = true)
+    @Mapping(source = "owner", target = "createdBy", ignore = true)
+    Project toEntity(ProjectDto project);
+
 }

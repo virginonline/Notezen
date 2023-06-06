@@ -4,13 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Data
 @Builder(toBuilder = true)
-public class ProjectDto {
+public class ProjectDto implements Serializable {
+    private Long id;
     private String title;
     private String description;
     @JsonProperty("tasks")

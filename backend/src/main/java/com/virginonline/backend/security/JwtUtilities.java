@@ -12,8 +12,7 @@ import org.springframework.util.StringUtils;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 
 @Slf4j
@@ -25,6 +24,7 @@ public class JwtUtilities {
     private Long jwtExpiration;
     @Value("${jwt.issuer}")
     private String issuer;
+
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -45,8 +45,8 @@ public class JwtUtilities {
     public Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
-    public String generateToken(String username , List<String> roles) {
 
+    public String generateToken(String username , List<String> roles) {
         return Jwts.builder()
                 .setSubject(username)
                 .claim("role",roles)

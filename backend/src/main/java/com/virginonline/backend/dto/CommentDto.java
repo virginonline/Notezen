@@ -9,9 +9,10 @@ import java.time.Instant;
 
 @Data
 @Builder
-public class UserDto implements Serializable {
+public class CommentDto implements Serializable {
     private Long id;
-    private String username;
-    @JsonProperty("created_date")
+    private String author;
+    private Long taskId;
+    @JsonProperty("created_at")
     private Instant createdDate;
 }

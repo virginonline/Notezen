@@ -11,4 +11,5 @@ public enum ETaskStatus {
     public static ETaskStatus findValue(String value) {
         return Arrays.stream(ETaskStatus.values()).filter(status -> status.toString().equals(value)).findFirst().orElseThrow();
     }
+
 }

@@ -1,6 +1,8 @@
 package com.virginonline.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.virginonline.backend.domain.task.enums.ETaskPriority;
+import com.virginonline.backend.domain.task.enums.ETaskStatus;
 import lombok.Builder;
 import lombok.Data;
 
