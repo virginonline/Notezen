@@ -11,7 +11,7 @@ interface MarketingLayoutProps {
   children: ReactNode
 }
 
-export default async function MarketingLayout({
+export default async function LandingLayout({
   children,
 }: MarketingLayoutProps) {
   return (

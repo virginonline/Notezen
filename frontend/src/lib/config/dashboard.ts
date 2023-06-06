@@ -10,6 +10,10 @@ export const dashboardConfig: DashboardConfig = {
             title: "Задачи",
             href: "/tasks",
         },
+        {
+            title: "Профиль",
+            href: "/dashboard"
+        }
     ],
     sidebarNav: [
         {

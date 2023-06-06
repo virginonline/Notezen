@@ -1,6 +1,7 @@
 import {getGreeting} from "@/lib/utils";
 
 export async function welcomeScreen(){
+
     const date: Date = new Date();
     const h: number = date.getHours();
     const title = await getGreeting(h);
@@ -11,7 +12,8 @@ export async function welcomeScreen(){
         day: 'numeric'
     })} `
     const welcome = async (name:string) => {
-        return `${title} ${name}`
+        return `${title}, ${name}`
     }
+
     return {greeting, welcome}
 }

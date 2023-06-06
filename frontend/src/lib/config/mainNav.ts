@@ -7,6 +7,10 @@ export const mainNavConfig: MainNavConfig = {
       href: "/dashboard/task",
     },
     {
+      title: "Профиль",
+      href: "/dashboard",
+    },
+    {
       title: "Проекты",
       href: "/dashboard/projects",
     },
