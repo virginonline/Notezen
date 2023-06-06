@@ -1,4 +1,3 @@
-import { TailwindIndicator } from "@/component/tailwind-indicator"
 import { ThemeProvider } from "@/component/theme-provider"
 import { Toaster } from "@/component/ui/toaster"
 import { cn } from "@/lib/utils"
@@ -39,7 +38,6 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           {children}
           <Toaster />
-          <TailwindIndicator />
         </ThemeProvider>
       </body>
     </html>

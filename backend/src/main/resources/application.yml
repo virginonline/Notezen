@@ -1,29 +1,19 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /api/v1
 spring:
-  config:
-    import: optional:file:.env[.properties]
-
+  output:
+    ansi:
+      enabled: always
   datasource:
-    url: jdbc:postgresql://localhost:5432/notezen?currentSchema=notezen
+    driver-class-name: org.postgresql.Driver
     username: postgres
     password: 123
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        format_sql: true
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-  main:
-    allow-bean-definition-overriding: true
+    url: jdbc:postgresql://localhost:5432/notezen?currentSchema=notezen
 
-security:
-  jwt:
-    secret: F290034F0CF32A44652583459E043EF3733471718949C2904EDD7B68C9A8BC0D
-    refresh: 30
-    access: 1
-
-springdoc:
-  override-with-generic-response: false
-
+jwt:
+  secret: 2b44b0b00fd822d8ce753e54dac3dc4e06c2725f7db930f3b9924468b53194dbccdbe23d7baa5ef5fbc414ca4b2e64700bad60c5a7c45eaba56880985582fba4
+  expiration: 36000000
+  issuer: anipeptun
+#

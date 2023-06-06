@@ -1,9 +1,13 @@
 package com.virginonline.backend.repository;
 
-import com.virginonline.backend.domain.user.Users;
+import com.virginonline.backend.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface UserRepository extends JpaRepository<Users, Long> {
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User,Long> {
+    Optional<User> findByUsername(String username);
+
+    boolean existsByUsername(String username);
+
 }

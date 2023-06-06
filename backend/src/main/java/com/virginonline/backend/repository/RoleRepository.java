@@ -1,9 +1,11 @@
 package com.virginonline.backend.repository;
 
-import com.virginonline.backend.domain.user.Role;
+import com.virginonline.backend.domain.user.EUserRole;
+import com.virginonline.backend.domain.user.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {
+import java.util.Optional;
+
+public interface RoleRepository extends JpaRepository<UserRole, Long> {
+    Optional<UserRole> findByName(EUserRole name);
 }
