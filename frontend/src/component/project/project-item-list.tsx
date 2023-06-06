@@ -1,4 +1,4 @@
-import {Project} from "@/lib/types/Project";
+import {Project} from "@/lib/types/type";
 import {ProjectItem} from "@/component/project/project-item";
 
 interface ProjectItemListProps {

@@ -2,6 +2,7 @@ package com.virginonline.backend.controller;
 
 import com.virginonline.backend.dto.LoginDto;
 import com.virginonline.backend.dto.RegisterDto;
+import com.virginonline.backend.dto.UserDto;
 import com.virginonline.backend.service.impl.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginDto login) {
+    public UserDto login(@RequestBody LoginDto login) {
        return userService.authenticate(login);
     }
     @PostMapping("/register")

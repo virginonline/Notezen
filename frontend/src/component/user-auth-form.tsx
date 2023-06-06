@@ -12,8 +12,6 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { Icons } from "./ui/icons";
 import {signIn} from "next-auth/react";
-import ky from "ky";
-import {json} from "stream/consumers";
 
 interface UserAuthFormProps extends HTMLAttributes<HTMLDivElement> {
   label: string
@@ -34,18 +32,13 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   async function onSubmit(data: FormData) {
     setIsLoading(true)
-    const register= await ky.post("http://localhost:8083/api/v1/auth/register",
-        {
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          json: {
-            username: data.username,
-            password: data.password
-          }
-        }
-    ).json();
+    const {username,password} = data;
+
+    await signIn('credentials', {
+        username,
+        password
+    })
+
     alert(JSON.stringify(register))
 
     setIsLoading(false);

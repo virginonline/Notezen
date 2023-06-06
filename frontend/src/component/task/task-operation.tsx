@@ -1,6 +1,6 @@
 "use client"
 
-import {Task} from "@/lib/types/Task";
+import {Task} from "@/lib/types/type";
 import {useRouter} from "next/navigation";
 import {useState} from "react";
 import { toast } from "@/component/ui/use-toast"
@@ -23,9 +23,6 @@ import {
 
 async function deleteTask(taskId: string) {
     const response = false;
-    //await fetch(`/api/projects/${taskId}`, {
-    //         method: "DELETE",
-    //     })
     if (!response) {
         toast({
             title: "Something went wrong.",

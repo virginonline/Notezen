@@ -1,7 +1,7 @@
 import {DashboardShell} from "@/component/shell";
 import {DashboardHeader} from "@/component/header";
 import {TaskCreateButton} from "@/component/task-create-button";
-import {Task} from "@/lib/types/Task";
+import {Task} from "@/lib/types/type";
 import {TaskItemList} from "@/component/task/task-item-list";
 
 export default async function TasksPage() {

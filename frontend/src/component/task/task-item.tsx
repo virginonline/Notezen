@@ -1,7 +1,5 @@
-import {Project} from "@/lib/types/Project";
-import {Task} from "@/lib/types/Task";
+import {Task} from "@/lib/types/type";
 import Link from "next/link";
-import {ProjectOperation} from "@/component/project/project-operation";
 import {TaskOperation} from "@/component/task/task-operation";
 
 

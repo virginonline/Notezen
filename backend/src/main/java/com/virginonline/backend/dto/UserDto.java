@@ -14,4 +14,5 @@ public class UserDto implements Serializable {
     private String username;
     @JsonProperty("created_date")
     private Instant createdDate;
+    private String token;
 }

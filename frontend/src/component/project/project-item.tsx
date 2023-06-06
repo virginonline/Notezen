@@ -1,4 +1,4 @@
-import {Project} from "@/lib/types/Project";
+import {Project} from "@/lib/types/type";
 import Link from "next/link";
 import {ProjectOperation} from "@/component/project/project-operation";
 

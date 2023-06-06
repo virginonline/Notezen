@@ -6,6 +6,8 @@ import com.virginonline.backend.domain.user.UserRole;
 import com.virginonline.backend.dto.BearerToken;
 import com.virginonline.backend.dto.LoginDto;
 import com.virginonline.backend.dto.RegisterDto;
+import com.virginonline.backend.dto.UserDto;
+import com.virginonline.backend.mapper.UserMapper;
 import com.virginonline.backend.repository.RoleRepository;
 import com.virginonline.backend.repository.UserRepository;
 import com.virginonline.backend.security.JwtUtilities;
@@ -39,10 +41,10 @@ public class UserService implements IUserService {
 
     private final PasswordEncoder passwordEncoder ;
     private final JwtUtilities jwtUtilities ;
-
+    private final UserMapper userMapper;
 
     @Override
-    public String authenticate(LoginDto login) {
+    public UserDto authenticate(LoginDto login) {
         Authentication authentication= authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         login.getUsername(),
@@ -53,7 +55,9 @@ public class UserService implements IUserService {
         User user = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         List<String> rolesNames = new ArrayList<>();
         rolesNames.add(user.getRole().getName().toString());
-        return jwtUtilities.generateToken(user.getUsername(), rolesNames);
+        UserDto userDto = userMapper.toDto(user);
+        userDto.setToken(jwtUtilities.generateToken(user.getUsername(), rolesNames));
+        return userDto;
     }
 
     @Override
