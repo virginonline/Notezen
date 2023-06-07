@@ -5,11 +5,13 @@ import com.virginonline.backend.domain.project.Project;
 import com.virginonline.backend.domain.project.ProjectsStatus;
 import com.virginonline.backend.domain.user.User;
 import com.virginonline.backend.dto.ProjectDto;
+import com.virginonline.backend.dto.ProjectPreviewDto;
 import com.virginonline.backend.mapper.ProjectMapper;
 import com.virginonline.backend.repository.ProjectRepository;
 import com.virginonline.backend.repository.ProjectStatusRepository;
 import com.virginonline.backend.repository.UserRepository;
 import com.virginonline.backend.service.IProjectService;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,8 +43,7 @@ public class ProjectService implements IProjectService {
 
     @Override
     public List<Project> getUserProjects(Long userId) {
-        List<Project> projects = projectRepository.findByAuthorId(userId);
-        return projects;
+        return projectRepository.findByAuthorId(userId);
     }
 
     @Override
@@ -56,6 +57,23 @@ public class ProjectService implements IProjectService {
 
     @Override
     public ProjectDto update(ProjectDto project) {
-        return null;
+        Project p = projectRepository.findById(project.getId()).orElseThrow();
+        p.setDescription(project.getDescription());
+        p.setTitle(project.getTitle());
+        return mapper.toDto(projectRepository.save(p));
+    }
+
+    @Override
+    public List<ProjectPreviewDto> getProjectPreview(Long userId) {
+        List<Project> projects = projectRepository.getUserActivityProjects(userId);
+        return projects.stream().map(project ->
+            ProjectPreviewDto
+                .builder()
+                .id(project.getId())
+                .status(project.getProjectStatus().getStatus().toString())
+                .taskCount(projectRepository.countTaskByProject(project))
+                .title(project.getTitle())
+                .build())
+            .collect(Collectors.toList());
     }
 }

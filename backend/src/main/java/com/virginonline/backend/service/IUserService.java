@@ -8,5 +8,5 @@ import org.springframework.http.ResponseEntity;
 public interface IUserService {
     UserDto authenticate(LoginDto login);
     ResponseEntity<?> register (RegisterDto register);
-
+    UserDto update(UserDto user);
 }

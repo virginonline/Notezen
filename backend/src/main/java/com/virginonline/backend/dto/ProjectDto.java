@@ -23,6 +23,4 @@ public class ProjectDto implements Serializable {
     private Instant createdDate;
     @JsonProperty("updated_date")
     private Instant updatedDate;
-
-
 }

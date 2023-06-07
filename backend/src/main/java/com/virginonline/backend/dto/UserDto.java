@@ -15,4 +15,7 @@ public class UserDto implements Serializable {
     @JsonProperty("created_date")
     private Instant createdDate;
     private String token;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
+
 }

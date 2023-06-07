@@ -14,4 +14,6 @@ public class TaskPreviewDto {
     private String project;
     @JsonProperty("expiration_date")
     private Instant expirationDate;
+    private String status;
+    private String priority;
 }

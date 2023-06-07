@@ -10,5 +10,6 @@ public class ProjectPreviewDto {
     private Long id;
     private String title;
     @JsonProperty("task_count")
-    private String taskCount;
+    private Long taskCount;
+    private String status;
 }

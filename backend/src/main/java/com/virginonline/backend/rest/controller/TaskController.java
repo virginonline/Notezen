@@ -34,9 +34,9 @@ public class TaskController {
         // return Comments dtos
         return null;
     }
-    @GetMapping("/preview/{userId}/{mode}")
-    public List<TaskPreviewDto> previewList(@PathVariable Long userId, @PathVariable String mode) {
-        return taskService.getTaskPreview(userId, mode);
+    @GetMapping("/preview/{userId}")
+    public List<TaskPreviewDto> previewList(@PathVariable Long userId, @RequestParam String filter) {
+        return taskService.getTaskPreview(userId, filter);
     }
     @PatchMapping
     public TaskDto update(@RequestBody TaskDto task) {

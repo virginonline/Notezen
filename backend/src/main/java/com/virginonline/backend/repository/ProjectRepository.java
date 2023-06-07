@@ -12,5 +12,9 @@ public interface ProjectRepository extends JpaRepository<Project,Long> {
 
     @Query("select p from Project p where p.createdBy.id = :id")
     List<Project> findByAuthorId(Long id);
+    @Query("select count (t) from Task t where t.project =:project")
+    Long countTaskByProject(Project project);
+    @Query("select p from Project p inner join Task t on t.project=p where t.createdBy.id=:userId or t.assignedTo=:userId or p.createdBy=:userId")
+    List<Project> getUserActivityProjects(Long userId);
 
 }

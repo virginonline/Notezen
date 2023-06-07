@@ -9,14 +9,15 @@ import com.virginonline.backend.domain.task.enums.ETaskStatus;
 import com.virginonline.backend.domain.user.User;
 import com.virginonline.backend.dto.TaskDto;
 import com.virginonline.backend.dto.TaskPreviewDto;
+import com.virginonline.backend.mapper.TaskMapper;
 import com.virginonline.backend.repository.*;
 import com.virginonline.backend.service.ITaskService;
+import java.time.Instant;
+import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,7 +34,7 @@ public class TaskService implements ITaskService {
     private final TaskRepository taskRepository;
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
-
+    private final TaskMapper taskMapper;
     @Override
     public Task addTask(TaskDto taskDto) {
         Task task = new Task();
@@ -82,8 +83,24 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public List<TaskPreviewDto> getTaskPreview(Long userId, String mode) {
-        Set<Task> tasks = new HashSet<>();
+    public TaskDto update(TaskDto taskDto) {
+        Task t = taskRepository.findById(taskDto.getId()).orElseThrow();
+        TaskPriority taskPriority = taskPriorityRepository.findByPriority(ETaskPriority.findValue(taskDto.getPriority()));
+        TasksStatus tasksStatus = taskStatusRepository.findByStatus(ETaskStatus.findValue(taskDto.getStatus()));
+
+        t.setDescription(taskDto.getDescription());
+        t.setTitle(taskDto.getTitle());
+        t.setTaskPriority(taskPriority);
+        t.setStatus(tasksStatus);
+
+        return taskMapper.toDto(taskRepository.save(t));
+    }
+    @Override
+    public List<TaskPreviewDto> getTaskPreview(Long userId, String filter) {
+        List<Task> tasks;
+        if(filter.equals("WEEK"))
+            tasks = taskRepository.getTaskByWeek();
+            else tasks = taskRepository.getTaskByMonth();
 
         //TODO add sort
         // sort between now and end of week
@@ -99,4 +116,5 @@ public class TaskService implements ITaskService {
                         .build())
                 .collect(Collectors.toList());
     }
+
 }

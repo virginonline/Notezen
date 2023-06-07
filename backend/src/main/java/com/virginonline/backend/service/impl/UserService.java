@@ -80,4 +80,13 @@ public class UserService implements IUserService {
         log.info("UserService : Token created : {}", token);
         return new ResponseEntity<>(new BearerToken(token, "Bearer "), HttpStatus.OK);
     }
+
+    @Override
+    public UserDto update(UserDto user) {
+        User u = userRepository.findById(user.getId()).orElseThrow();
+        u.setUsername(user.getUsername());
+        u.setPassword(passwordEncoder.encode(user.getPassword()));
+        u.setUpdatedDate(Instant.now());
+        return userMapper.toDto(userRepository.save(u));
+    }
 }

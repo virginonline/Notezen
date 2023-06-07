@@ -12,7 +12,7 @@ public interface ITaskService {
     List<Task> getProjectTasks(Long projectId);
     List<Task> getUserTasks(Long userId);
     Boolean removeTask(Long id);
-    List<TaskPreviewDto> getTaskPreview(Long userId, String mode);
-
+    List<TaskPreviewDto> getTaskPreview(Long userId, String filter);
+    TaskDto update(TaskDto taskDto);
 
 }
