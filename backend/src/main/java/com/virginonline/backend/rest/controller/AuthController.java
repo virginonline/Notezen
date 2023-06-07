@@ -1,4 +1,4 @@
-package com.virginonline.backend.controller;
+package com.virginonline.backend.rest.controller;
 
 import com.virginonline.backend.dto.LoginDto;
 import com.virginonline.backend.dto.RegisterDto;
