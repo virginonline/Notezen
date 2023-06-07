@@ -8,13 +8,19 @@ import com.virginonline.backend.domain.task.enums.ETaskPriority;
 import com.virginonline.backend.domain.task.enums.ETaskStatus;
 import com.virginonline.backend.domain.user.User;
 import com.virginonline.backend.dto.TaskDto;
+import com.virginonline.backend.dto.TaskPreviewDto;
 import com.virginonline.backend.repository.*;
 import com.virginonline.backend.service.ITaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -73,5 +79,24 @@ public class TaskService implements ITaskService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<TaskPreviewDto> getTaskPreview(Long userId, String mode) {
+        Set<Task> tasks = new HashSet<>();
+
+        //TODO add sort
+        // sort between now and end of week
+        // sort between now and end of month
+
+        return tasks.stream().map(task ->
+                TaskPreviewDto
+                        .builder()
+                        .id(task.getId())
+                        .title(task.getTitle())
+                        .expirationDate(task.getExpirationDate())
+                        .project(task.getProject().getTitle())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
