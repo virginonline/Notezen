@@ -6,6 +6,9 @@ import com.virginonline.backend.dto.TaskPreviewDto;
 
 import java.util.List;
 
+
+//TODO
+// change return type to DTO
 public interface ITaskService {
     Task addTask(TaskDto taskDto);
     Task assignTask(Long taskId, String username);

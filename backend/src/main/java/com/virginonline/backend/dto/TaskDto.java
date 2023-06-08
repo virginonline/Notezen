@@ -1,13 +1,11 @@
 package com.virginonline.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.virginonline.backend.domain.task.enums.ETaskPriority;
-import com.virginonline.backend.domain.task.enums.ETaskStatus;
-import lombok.Builder;
-import lombok.Data;
-
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import lombok.Builder;
+import lombok.Data;
 
 
 @Data
@@ -19,7 +17,7 @@ public class TaskDto implements Serializable {
    private String status;
    private String priority;
    @JsonProperty("expiration_date")
-   private Instant expirationDate;
+   private LocalDateTime expirationDate;
    @JsonProperty("created_by")
    private String createdBy;
    @JsonProperty("created_date")

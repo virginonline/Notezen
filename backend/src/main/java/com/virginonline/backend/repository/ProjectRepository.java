@@ -16,5 +16,5 @@ public interface ProjectRepository extends JpaRepository<Project,Long> {
     Long countTaskByProject(Project project);
     @Query("select p from Project p inner join Task t on t.project=p where t.createdBy.id=:userId or t.assignedTo=:userId or p.createdBy=:userId")
     List<Project> getUserActivityProjects(Long userId);
-
+    Boolean existsByTitle(String title);
 }

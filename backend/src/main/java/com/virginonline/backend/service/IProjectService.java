@@ -6,8 +6,10 @@ import com.virginonline.backend.dto.ProjectPreviewDto;
 
 import java.util.List;
 
+//TODO
+// change return type to DTO
 public interface IProjectService {
-    Project addProject(ProjectDto projectDto);
+    ProjectDto addProject(ProjectDto projectDto);
     List<Project> getUserProjects(Long userId);
     Boolean removeProject(Long projectId);
     ProjectDto update(ProjectDto project);

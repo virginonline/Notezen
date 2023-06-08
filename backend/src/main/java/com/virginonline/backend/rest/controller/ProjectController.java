@@ -19,15 +19,15 @@ public class ProjectController {
 
 
     @PostMapping("/new")
-    public Project createProject(@RequestBody ProjectDto project) {
+    public ProjectDto createProject(@RequestBody ProjectDto project) {
        return projectService.addProject(project);
     }
     @GetMapping("/user/{userId}")
-    public List<Project> getProjectsByUser(@PathParam("userId") Long id) {
+    public List<Project> getProjectsByUser(@PathVariable("userId") Long id) {
         return projectService.getUserProjects(id);
     }
     @GetMapping("/preview/{userId}")
-    public List<ProjectPreviewDto> previewList() {
-        return null;
+    public List<ProjectPreviewDto> previewList(@PathVariable("userId") Long userId) {
+        return projectService.getProjectPreview(userId);
     }
 }

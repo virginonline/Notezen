@@ -6,6 +6,7 @@ import com.virginonline.backend.domain.project.ProjectsStatus;
 import com.virginonline.backend.domain.user.User;
 import com.virginonline.backend.dto.ProjectDto;
 import com.virginonline.backend.dto.ProjectPreviewDto;
+import com.virginonline.backend.exception.ResourceAlreadyExist;
 import com.virginonline.backend.mapper.ProjectMapper;
 import com.virginonline.backend.repository.ProjectRepository;
 import com.virginonline.backend.repository.ProjectStatusRepository;
@@ -29,7 +30,10 @@ public class ProjectService implements IProjectService {
     private final ProjectMapper mapper;
 
     @Override
-    public Project addProject(ProjectDto projectDto) {
+    public ProjectDto addProject(ProjectDto projectDto) {
+        if (projectRepository.existsByTitle(projectDto.getTitle())) {
+            throw new ResourceAlreadyExist(String.format("Project with %s title already exist", projectDto.getTitle()));
+        }
         ProjectsStatus projectsStatus = projectStatusRepository.findByStatus(EProjectStatus.findValue(projectDto.getStatus()));
         User user = userRepository.findByUsername(projectDto.getOwner()).orElseThrow();
         Project project = new Project();
@@ -38,7 +42,7 @@ public class ProjectService implements IProjectService {
         project.setDescription(projectDto.getDescription());
         project.setProjectStatus(projectsStatus);
         project.setCreatedBy(user);
-        return (projectRepository.save(project));
+        return mapper.toDto(projectRepository.save(project));
     }
 
     @Override

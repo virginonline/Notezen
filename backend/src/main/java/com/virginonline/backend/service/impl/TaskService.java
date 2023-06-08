@@ -10,18 +10,21 @@ import com.virginonline.backend.domain.user.User;
 import com.virginonline.backend.dto.TaskDto;
 import com.virginonline.backend.dto.TaskPreviewDto;
 import com.virginonline.backend.mapper.TaskMapper;
-import com.virginonline.backend.repository.*;
+import com.virginonline.backend.repository.ProjectRepository;
+import com.virginonline.backend.repository.TaskPriorityRepository;
+import com.virginonline.backend.repository.TaskRepository;
+import com.virginonline.backend.repository.TaskStatusRepository;
+import com.virginonline.backend.repository.UserRepository;
 import com.virginonline.backend.service.ITaskService;
-import java.time.Instant;
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -37,8 +40,10 @@ public class TaskService implements ITaskService {
     private final TaskMapper taskMapper;
     @Override
     public Task addTask(TaskDto taskDto) {
+        if(taskRepository.existsByTitle(taskDto.getTitle(), taskDto.getProject())) {
+            return null;
+        }
         Task task = new Task();
-
         User owner = userRepository.findByUsername(taskDto.getCreatedBy()).orElseThrow();
         Project project = projectRepository.findByTitle(taskDto.getProject()).orElseThrow();
         TasksStatus status = taskStatusRepository.findByStatus(ETaskStatus.findValue(taskDto.getStatus()));
@@ -50,7 +55,7 @@ public class TaskService implements ITaskService {
         task.setTaskPriority(priority);
         task.setProject(project);
 
-        task.setExpirationDate(taskDto.getExpirationDate());
+        task.setExpirationDate(Timestamp.valueOf(taskDto.getExpirationDate()));
 
         return taskRepository.save(task);
     }
@@ -97,21 +102,21 @@ public class TaskService implements ITaskService {
     }
     @Override
     public List<TaskPreviewDto> getTaskPreview(Long userId, String filter) {
+        LocalDateTime now = LocalDateTime.now();
         List<Task> tasks;
-        if(filter.equals("WEEK"))
-            tasks = taskRepository.getTaskByWeek();
-            else tasks = taskRepository.getTaskByMonth();
-
-        //TODO add sort
-        // sort between now and end of week
-        // sort between now and end of month
-
+        if (filter.equals("WEEK")) {
+            tasks = taskRepository.getTaskByWeek(
+                now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY)));
+        } else {
+            tasks = taskRepository.getTaskByMonth(
+                now.withDayOfMonth(now.getDayOfMonth()));
+        }
         return tasks.stream().map(task ->
                 TaskPreviewDto
                         .builder()
                         .id(task.getId())
                         .title(task.getTitle())
-                        .expirationDate(task.getExpirationDate())
+                        .expirationDate(task.getExpirationDate().toLocalDateTime())
                         .project(task.getProject().getTitle())
                         .build())
                 .collect(Collectors.toList());
