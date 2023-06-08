@@ -12,14 +12,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-    private final UserService userService;
+  private final UserService userService;
 
-    @PostMapping("/login")
-    public UserDto login(@RequestBody LoginDto login) {
-       return userService.authenticate(login);
-    }
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterDto registerDto) {
-        return userService.register(registerDto);
-    }
+  @PostMapping("/login")
+  public UserDto login(@RequestBody LoginDto login) {
+    return userService.authenticate(login);
+  }
+
+  @PostMapping("/register")
+  public ResponseEntity<?> register(@RequestBody RegisterDto registerDto) {
+    return userService.register(registerDto);
+  }
 }

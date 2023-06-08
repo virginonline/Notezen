@@ -5,7 +5,5 @@ import com.virginonline.backend.domain.project.ProjectsStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProjectStatusRepository extends JpaRepository<ProjectsStatus, Long> {
-    ProjectsStatus findByStatus(EProjectStatus status);
-
+  ProjectsStatus findByStatus(EProjectStatus status);
 }
-

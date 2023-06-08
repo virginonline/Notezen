@@ -5,5 +5,5 @@ import com.virginonline.backend.domain.task.enums.ETaskPriority;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TaskPriorityRepository extends JpaRepository<TaskPriority, Long> {
-    TaskPriority findByPriority(ETaskPriority priority);
+  TaskPriority findByPriority(ETaskPriority priority);
 }

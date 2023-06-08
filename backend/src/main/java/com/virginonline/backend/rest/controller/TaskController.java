@@ -16,35 +16,38 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TaskController {
 
-    private final TaskService taskService;
+  private final TaskService taskService;
 
-    @GetMapping("/user/{userId}")
-    public List<Task> findTasks(@PathVariable("userId") Long id) {
-        return taskService.getUserTasks(id);
-    }
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Task createTask(@RequestBody TaskDto task) {
-        return taskService.addTask(task);
-    }
+  @GetMapping("/user/{userId}")
+  public List<Task> findTasks(@PathVariable("userId") Long id) {
+    return taskService.getUserTasks(id);
+  }
 
-    @GetMapping("/{taskId}/comments")
-    public List<CommentDto> getCommentsTask(@PathVariable Long taskId) {
-        // TODO
-        // return Comments dtos
-        return null;
-    }
-    @GetMapping("/preview/{userId}")
-    public List<TaskPreviewDto> previewList(@PathVariable Long userId, @RequestParam String filter) {
-        return taskService.getTaskPreview(userId, filter);
-    }
-    @PatchMapping
-    public TaskDto update(@RequestBody TaskDto task) {
-        return null;
-    }
-    @PatchMapping("/{taskId}")
-    public Task assignTo(@PathVariable Long taskId, @RequestParam String username) {
-        return taskService.assignTask(taskId, username);
-    }
+  @PostMapping
+  @ResponseStatus(HttpStatus.CREATED)
+  public Task createTask(@RequestBody TaskDto task) {
+    return taskService.addTask(task);
+  }
 
+  @GetMapping("/{taskId}/comments")
+  public List<CommentDto> getCommentsTask(@PathVariable Long taskId) {
+    // TODO
+    // return Comments dtos
+    return null;
+  }
+
+  @GetMapping("/preview/{userId}")
+  public List<TaskPreviewDto> previewList(@PathVariable Long userId, @RequestParam String filter) {
+    return taskService.getTaskPreview(userId, filter);
+  }
+
+  @PatchMapping
+  public TaskDto update(@RequestBody TaskDto task) {
+    return null;
+  }
+
+  @PatchMapping("/{taskId}")
+  public Task assignTo(@PathVariable Long taskId, @RequestParam String username) {
+    return taskService.assignTask(taskId, username);
+  }
 }

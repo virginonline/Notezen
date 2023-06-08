@@ -10,12 +10,14 @@ import java.time.Instant;
 @Data
 @Builder
 public class UserDto implements Serializable {
-    private Long id;
-    private String username;
-    @JsonProperty("created_date")
-    private Instant createdDate;
-    private String token;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
+  private Long id;
+  private String username;
 
+  @JsonProperty("created_date")
+  private Instant createdDate;
+
+  private String token;
+
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+  private String password;
 }

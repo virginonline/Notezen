@@ -1,16 +1,14 @@
 package com.virginonline.backend.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class BearerToken {
-    private String accessToken;
-    private String tokenType;
-
-    public BearerToken(String token, String bearer) {
-        this.tokenType = bearer;
-        this.accessToken = token;
-    }
+  private String accessToken;
+  private String tokenType;
 }

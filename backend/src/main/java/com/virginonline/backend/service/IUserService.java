@@ -6,7 +6,9 @@ import com.virginonline.backend.dto.UserDto;
 import org.springframework.http.ResponseEntity;
 
 public interface IUserService {
-    UserDto authenticate(LoginDto login);
-    ResponseEntity<?> register (RegisterDto register);
-    UserDto update(UserDto user);
+  UserDto authenticate(LoginDto login);
+
+  ResponseEntity<?> register(RegisterDto register);
+
+  UserDto update(UserDto user);
 }

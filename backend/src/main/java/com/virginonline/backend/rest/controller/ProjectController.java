@@ -15,19 +15,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProjectController {
 
-    private final ProjectService projectService;
+  private final ProjectService projectService;
 
+  @PostMapping("/new")
+  public ProjectDto createProject(@RequestBody ProjectDto project) {
+    return projectService.addProject(project);
+  }
 
-    @PostMapping("/new")
-    public ProjectDto createProject(@RequestBody ProjectDto project) {
-       return projectService.addProject(project);
-    }
-    @GetMapping("/user/{userId}")
-    public List<Project> getProjectsByUser(@PathVariable("userId") Long id) {
-        return projectService.getUserProjects(id);
-    }
-    @GetMapping("/preview/{userId}")
-    public List<ProjectPreviewDto> previewList(@PathVariable("userId") Long userId) {
-        return projectService.getProjectPreview(userId);
-    }
+  @GetMapping("/user/{userId}")
+  public List<Project> getProjectsByUser(@PathVariable("userId") Long id) {
+    return projectService.getUserProjects(id);
+  }
+
+  @GetMapping("/preview/{userId}")
+  public List<ProjectPreviewDto> previewList(@PathVariable("userId") Long userId) {
+    return projectService.getProjectPreview(userId);
+  }
 }
