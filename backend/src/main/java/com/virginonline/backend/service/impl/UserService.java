@@ -83,7 +83,8 @@ public class UserService implements IUserService {
 
   @Override
   public UserDto update(UserDto user) {
-    User u = userRepository.findById(user.getId()).orElseThrow();
+    User u =
+        userRepository.findById(user.getId()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     u.setUsername(user.getUsername());
     u.setPassword(passwordEncoder.encode(user.getPassword()));
     u.setUpdatedDate(Instant.now());

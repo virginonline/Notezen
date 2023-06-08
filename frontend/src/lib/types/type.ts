@@ -32,7 +32,7 @@ export type TaskPreview = {
 }
 
 export type ProjectPreview = {
-    id:string,
+    id:number,
     title:string,
     taskCount:string
 }

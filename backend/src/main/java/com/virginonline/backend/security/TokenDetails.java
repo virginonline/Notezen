@@ -1,5 +1,7 @@
 package com.virginonline.backend.security;
 
+import java.io.Serializable;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,9 +13,9 @@ import java.time.Instant;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TokenDetails {
+public class TokenDetails implements Serializable {
     private Long userId;
     private String token;
-    private Instant issuedAt;
-    private Instant expiresAt;
+    private Date issuedAt;
+    private Date expiresAt;
 }

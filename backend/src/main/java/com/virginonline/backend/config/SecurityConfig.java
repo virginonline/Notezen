@@ -29,7 +29,6 @@ import java.util.List;
 public class SecurityConfig {
 
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
-  private final CustomerUserDetailsService customerUserDetailsService;
 
   private final String[] publicRoutes = {"/auth/register", "/auth/login"};
 

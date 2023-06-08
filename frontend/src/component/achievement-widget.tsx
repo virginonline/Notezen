@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React, {FC, useCallback} from "react";
 import {
     Select,
     SelectContent,
@@ -9,13 +9,17 @@ import {
     SelectValue
 } from "@/component/ui/select";
 import {TaskPreviewItem} from "@/component/task/task-preview";
-import {Project, Task, TaskPreview} from "@/lib/types/type";
-import {DashboardHeader} from "@/component/header";
+import {Project, ProjectPreview, TaskPreview} from "@/lib/types/type";
 import {welcomeScreen} from "@/lib/web/state/ui/welcome";
 import {ProfileHeader} from "@/component/profile-header";
+import {ProjectPreviewItem} from "@/component/project/project-preview-item";
+import {TaskItemList} from "@/component/task/task-item-list";
 
-export async function AchievementWidget ()  {
-    const {greeting, welcome} = await welcomeScreen();
+
+
+export function AchievementWidget ()  {
+    const {greeting , welcome} = welcomeScreen();
+    const user = '';
     const tasks : TaskPreview[] = [
         {
             id:1,
@@ -27,20 +31,29 @@ export async function AchievementWidget ()  {
             title:"Рефакторинг сервиса пользователей",
             description: "Выполнить рефакторинг сервиса пользователей",
         },
+        {
+            id:12,
+            title:"Рефакторинг сервиса пользователей",
+            description: "Выполнить рефакторинг сервиса пользователей",
+        },
+        {
+            id:232,
+            title:"Рефакторинг сервиса пользователей",
+            description: "Выполнить рефакторинг сервиса пользователей",
+        },
 
     ]
-    const projects : Project[] = [
+    const projects : ProjectPreview[] = [
         {
             id:1,
             title:"Проект 1",
-            description: "Описание проекта",
-            owner: "user1",
-            status: "В процессе"
+            taskCount: "100"
         }
     ]
+
     return(
-        <div>
-            <ProfileHeader heading={greeting}/>
+        <div className='grid items-start gap-8'>
+            <ProfileHeader heading={greeting} text={welcome('Ivan')}/>
         <div
         className='
           rounded-md
@@ -56,13 +69,11 @@ export async function AchievementWidget ()  {
                     <SelectValue placeholder='Выбрать промежуток'/>
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectContent>
                         <SelectGroup>
                             <SelectLabel>Отображение статистики за</SelectLabel>
                             <SelectItem value='WEEK'>За неделю</SelectItem>
                             <SelectItem value='MONTH'>За месяц</SelectItem>
                         </SelectGroup>
-                    </SelectContent>
                 </SelectContent>
             </Select>
             <div>
@@ -81,15 +92,20 @@ export async function AchievementWidget ()  {
                 <div className='
                 rounded
                 border
+                divide-border
                 '>
-                    <TaskPreviewItem task={tasks[0]}/>
+                    {tasks.map((task) => (
+                        <TaskPreviewItem key={task.id} task={task}/>
+                    ))}
                 </div>
                 <div className='
                 rounded
                 border
                 '
                 >
-                    projects
+                    {projects.map((project) => (
+                        <ProjectPreviewItem key={project.id} project={project}/>
+                    ))}
                 </div>
             </div>
         </div>

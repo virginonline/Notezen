@@ -17,17 +17,24 @@ public interface TaskMapper {
   @Mapping(source = "status.title", target = "status", qualifiedByName = "findTaskStatus")
   @Mapping(source = "createdBy.username", target = "createdBy")
   @Mapping(source = "project.title", target = "project")
+  @Mapping(source = "expirationDate", target = "expirationDate")
   @Mapping(source = "taskPriority.priority", target = "priority")
+  @Mapping(target = "createdDate", ignore = true)
+  @Mapping(target = "updatedDate", ignore = true)
   TaskDto toDto(Task task);
 
-  @Mapping(source = "status", target = "status", ignore = true)
-  @Mapping(source = "createdBy", target = "createdBy", ignore = true)
-  @Mapping(source = "project", target = "project", ignore = true)
-  @Mapping(source = "assignedTo", target = "assignedTo", ignore = true)
-  @Mapping(source = "priority", target = "taskPriority", ignore = true)
+  @Mapping(target = "status", ignore = true)
+  @Mapping(target = "createdBy", ignore = true)
+  @Mapping(target = "project", ignore = true)
+  @Mapping(target = "assignedTo", ignore = true)
+  @Mapping(target = "taskPriority", ignore = true)
+  @Mapping(target = "createdDate", ignore = true)
+  @Mapping(target = "updatedDate", ignore = true)
+  @Mapping(target = "expirationDate", ignore = true)
   Task toEntity(TaskDto task);
 
   List<TaskDto> toDtoList(List<Task> tasks);
+  List<Task> toEntityList(List<TaskDto> tasks);
 
   @Named("findTaskStatus")
   default String findTaskStatus(String status) {

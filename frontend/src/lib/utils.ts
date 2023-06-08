@@ -17,7 +17,7 @@ export function formatDate(input: string | number): string {
 
 export function absoluteUrl(path: string) {
 }
-export async function getGreeting(h: number): Promise<string> {
+export function getGreeting(h: number) {
 	if (h < 12) {
 		return ("Доброе утро");
 	} else if (h < 18) {
