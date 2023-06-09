@@ -57,6 +57,7 @@ public class UserService implements IUserService {
     rolesNames.add(user.getRole().getName().toString());
     UserDto userDto = userMapper.toDto(user);
     userDto.setToken(jwtUtilities.generateToken(user.getUsername(), rolesNames));
+    log.info("User authorize {}", userDto.getUsername());
     return userDto;
   }
 

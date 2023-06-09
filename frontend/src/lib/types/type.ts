@@ -1,6 +1,14 @@
 export type User = {
     id:string,
     username:string,
+    token:string
+    createdDate?:Date
+}
+
+export type Comment = {
+    id:number,
+    author:string,
+    content:string
 }
 
 export type Project = {

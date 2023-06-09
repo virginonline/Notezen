@@ -1,6 +1,6 @@
 "use client";
 import "@/styles/editor.css";
-import { Task } from "@/lib/types/type";
+import {Comment, Task} from "@/lib/types/type";
 import { useCallback, useEffect, useRef, useState } from "react";
 import EditorJS from "@editorjs/editorjs";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,7 +22,9 @@ import {
   SelectValue,
 } from "./ui/select";
 import { SelectLabel } from "@radix-ui/react-select";
-import {toast, useToast} from "@/component/ui/use-toast";
+import {useToast} from "@/component/ui/use-toast";
+import {Priorities, TaskStatuses} from "@/component/data";
+import {CommentItem} from "@/component/comment/comment";
 
 interface EditorProps {
   task: Pick<Task, "id" | "title" | "description" | "author">;
@@ -30,6 +32,7 @@ interface EditorProps {
 type formData = z.infer<typeof taskSchema>;
 
 export function Editor() {
+
   const ref = useRef<EditorJS>();
   const { register, handleSubmit } = useForm<formData>({
     resolver: zodResolver(taskSchema),
@@ -103,48 +106,46 @@ export function Editor() {
             <span>Сохранить</span>
           </button>
         </div>
-        <div className="prose prose-stone mx-auto w-[800px] dark:prose-invert">
-          <div className="gap-10 py-3">
+        <div className="prose prose-stone mx-auto w-[500px] dark:prose-invert mt-7">
+          <div className="">
             <Select>
-              <SelectTrigger className="w-[500px]">
+              <SelectTrigger className="w-[500px] mb-3">
                 <SelectValue placeholder="Выберите проект" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Ваши проекты</SelectLabel>
-                  <SelectItem value="apple">Проект 1</SelectItem>
-                  <SelectItem value="banana">2</SelectItem>
-                  <SelectItem value="blueberry">3</SelectItem>
-                  <SelectItem value="grapes">4</SelectItem>
-                  <SelectItem value="pineapple">5</SelectItem>
+                  <SelectItem value="project1">Проект 1</SelectItem>
+                  <SelectItem value="project2">2</SelectItem>
+                  <SelectItem value="project3">3</SelectItem>
+                  <SelectItem value="project4">4</SelectItem>
+                  <SelectItem value="project5">5</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
-
             <Select>
-              <SelectTrigger className="w-[500px]">
+              <SelectTrigger className="w-[500px] mb-3">
                 <SelectValue placeholder="Выберите приоритет задачи" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Приоритет задачи</SelectLabel>
-                  <SelectItem value="1">Высокий</SelectItem>
-                  <SelectItem value="2">Средний</SelectItem>
-                  <SelectItem value="3">Низкий</SelectItem>
+                  {Priorities.map((priority) => (
+                      <SelectItem key={priority.value} value={priority.value}>{priority.label}</SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
-
             <Select>
-              <SelectTrigger className="w-[500px]">
+              <SelectTrigger className="w-[500px] mb-3">
                 <SelectValue placeholder="Выберите статус задачи" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Статус задачи</SelectLabel>
-                  <SelectItem value="1">Запланирован</SelectItem>
-                  <SelectItem value="2">В прогрессе</SelectItem>
-                  <SelectItem value="3">Приостановлен</SelectItem>
+                  {TaskStatuses.map((status) => (
+                      <SelectItem key={status.value} value={status.value}>{status.label}</SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>

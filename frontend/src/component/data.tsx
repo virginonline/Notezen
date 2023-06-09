@@ -46,7 +46,7 @@ export const ProjectStatuses = [
     },
 ]
 
-export const priorities = [
+export const Priorities = [
     {
         label: 'Высокий',
         value: 'HIGH',

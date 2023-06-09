@@ -1,6 +1,6 @@
 import {DashboardShell} from "@/component/shell";
 import {DashboardHeader} from "@/component/header";
-import {TaskCreateButton} from "@/component/task-create-button";
+import {TaskCreateButton} from "@/component/task/task-create-button";
 import {Task} from "@/lib/types/type";
 import {TaskItemList} from "@/component/task/task-item-list";
 

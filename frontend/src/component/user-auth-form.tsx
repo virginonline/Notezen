@@ -2,7 +2,7 @@
 
 import { authSchema } from "@/lib/validation/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearchParams } from "next/navigation";
+import {redirect, useSearchParams} from "next/navigation";
 import {HTMLAttributes, useState} from "react";
 import { useForm, useFormState } from "react-hook-form";
 import * as z from "zod";
@@ -12,6 +12,10 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { Icons } from "./ui/icons";
 import {signIn} from "next-auth/react";
+import {api} from "@/lib/api";
+import {login} from "@/lib/api/auth";
+import {date} from "zod";
+import {setCookie} from "cookies-next";
 
 interface UserAuthFormProps extends HTMLAttributes<HTMLDivElement> {
   label: string
@@ -33,13 +37,20 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   async function onSubmit(data: FormData) {
     setIsLoading(true)
     const {username,password} = data;
+    const {token} = await login(data.username, data.password);
+    setCookie('_token', token)
+    alert(token)
+    /*const user : {id:string, username : string, token : string} = await api.post('auth/login', {
+      json: {
+        username: username,
+        password: password
+      }
+    }).json();
+    if(user) {
+      alert(JSON.stringify(user))
+    }*/
 
-    await signIn('credentials', {
-        username,
-        password
-    })
-
-    alert(JSON.stringify(register))
+    //alert(JSON.stringify(register))
 
     setIsLoading(false);
   }
