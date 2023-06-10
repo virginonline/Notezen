@@ -1,10 +1,11 @@
 package com.virginonline.backend.domain.user;
 
 import jakarta.persistence.*;
+import java.io.Serializable;
 
 @Entity(name = "UserRole")
 @Table(name = "roles")
-public class UserRole {
+public class UserRole implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +18,8 @@ public class UserRole {
     public Long getId() {
         return id;
     }
-    public EUserRole getName() {
-        return name;
+    public String getName() {
+        return name.toString();
     }
 
     public void setName(EUserRole name) {

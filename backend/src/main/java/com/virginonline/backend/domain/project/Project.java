@@ -3,16 +3,18 @@ package com.virginonline.backend.domain.project;
 import com.virginonline.backend.domain.task.Task;
 import com.virginonline.backend.domain.user.User;
 import jakarta.persistence.*;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-
-import java.time.Instant;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Entity(name = "Project")
 @Table(name = "projects")
@@ -33,11 +35,12 @@ public class Project {
 
     @CreatedDate
     @Column(name = "created_date", nullable = false)
-    private Instant createdDate;
+    @CreationTimestamp
+    private Timestamp createdDate;
 
     @LastModifiedDate
     @Column(name = "updated_date")
-    private Instant updatedDate;
+    private Timestamp  updatedDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -52,4 +55,12 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private Set<Task> tasks = new LinkedHashSet<>();
 
+    @PrePersist
+    public void toCreate() {
+         setCreatedDate(Timestamp.from(Instant.now()));
+    }
+    @PreUpdate
+    public void toUpdate() {
+        setUpdatedDate(Timestamp.from(Instant.now()));
+    }
 }

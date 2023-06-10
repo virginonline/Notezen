@@ -12,8 +12,12 @@ import com.virginonline.backend.repository.ProjectRepository;
 import com.virginonline.backend.repository.ProjectStatusRepository;
 import com.virginonline.backend.repository.UserRepository;
 import com.virginonline.backend.service.IProjectService;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,11 +45,14 @@ public class ProjectService implements IProjectService {
     Project project = new Project();
     mapper.toDto(project);
     project.setTitle(projectDto.getTitle());
+    project.setCreatedDate(Timestamp.from(Instant.now()));
+    project.setUpdatedDate(Timestamp.from(Instant.now()));
     project.setDescription(projectDto.getDescription());
     project.setProjectStatus(projectsStatus);
     project.setCreatedBy(user);
     return mapper.toDto(projectRepository.save(project));
   }
+
 
   @Override
   public List<Project> getUserProjects(Long userId) {

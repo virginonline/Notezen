@@ -1,6 +1,7 @@
 package com.virginonline.backend.domain.user;
 
 import jakarta.persistence.*;
+import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -18,13 +19,13 @@ import java.util.List;
 @Table(name = "users")
 @Getter
 @Setter
-public class User implements UserDetails {
+public class User implements Serializable, UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "role")
     private UserRole role;
 
@@ -53,7 +54,7 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> grantedAuthority = new ArrayList<>();
-        grantedAuthority.add(new SimpleGrantedAuthority(this.role.getName().toString()));
+        grantedAuthority.add(new SimpleGrantedAuthority(this.role.getName()));
         return grantedAuthority;
     }
 
