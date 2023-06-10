@@ -1,4 +1,3 @@
-import {welcomeScreen} from "@/lib/web/state/ui/welcome";
 import {AchievementWidget} from "@/component/achievement-widget";
 
 export const metadata = {
@@ -7,7 +6,6 @@ export const metadata = {
 }
 
 export default async function DashboardPage() {
-    const {greeting, welcome} = welcomeScreen();
 
     return(
       <div>

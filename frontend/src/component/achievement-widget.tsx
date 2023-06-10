@@ -18,7 +18,8 @@ import {useWelcomeScreen} from "@/hooks/use-welcome-screen";
 
 
 export function AchievementWidget ()  {
-    const {time, userWelcome} = useWelcomeScreen();
+    const [time, userWelcome] = useWelcomeScreen();
+
     const tasks : TaskPreview[] = [
         {
             id:1,
@@ -52,7 +53,7 @@ export function AchievementWidget ()  {
 
     return(
         <div className='grid items-start gap-8'>
-            <ProfileHeader heading={time.current} text={userWelcome.current}/>
+            <ProfileHeader heading={time} text={userWelcome}/>
         <div
         className='
           rounded-md

@@ -1,15 +1,18 @@
-"use client"
 import {Input} from "@/component/ui/input";
-import {useState} from "react";
 import {SelectPriority} from "@/component/select-priority";
+import React, {useCallback} from "react";
+import useSearch from "@/hooks/useSearch";
 
 export function TasksToolbar() {
-    const [filter, setFilter] = useState<string>('')
-
+    const {filter, setFilter} = useSearch()
+    const handleOnChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        setFilter(event.target.value)
+        console.log(filter)
+    },[filter]);
     return(
         <div className='flex items-center justify-between'>
             <div className='flex flex-1 items-center space-x-2'>
-                <Input placeholder='Task filter'/>
+                <Input onChange={(event) => handleOnChange(event)} placeholder='Введите название задачи'/>
                 <SelectPriority/>
             </div>
         </div>

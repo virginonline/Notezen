@@ -1,13 +1,14 @@
-import {useEffect, useRef} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {welcomeScreen} from "@/lib/web/state/ui/welcome";
 
 export function useWelcomeScreen() {
-    const userWelcome = useRef('');
-    const time = useRef('');
+    const [time,setTime] = useState('');
+    const [userWelcome, setUserWelcome] = useState('');
     useEffect(() => {
         const {greeting, welcome} = welcomeScreen();
-        time.current = greeting;
-        userWelcome.current = welcome('Ivan')
-    }, [time,userWelcome])
-    return {time,userWelcome};
+        setTime(greeting);
+        setUserWelcome(welcome('Ivan'));
+
+    }, [])
+    return [time,userWelcome];
 }
