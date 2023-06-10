@@ -1,7 +1,6 @@
 import {getGreeting} from "@/lib/utils";
 
 export function welcomeScreen(){
-
     const date: Date = new Date();
     const h: number = date.getHours();
     const title = getGreeting(h);

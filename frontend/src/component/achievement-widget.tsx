@@ -1,4 +1,5 @@
-import React, {FC, useCallback} from "react";
+"use client"
+import React, {FC, useCallback, useEffect} from "react";
 import {
     Select,
     SelectContent,
@@ -9,17 +10,15 @@ import {
     SelectValue
 } from "@/component/ui/select";
 import {TaskPreviewItem} from "@/component/task/task-preview";
-import {Project, ProjectPreview, TaskPreview} from "@/lib/types/type";
-import {welcomeScreen} from "@/lib/web/state/ui/welcome";
+import {ProjectPreview, TaskPreview} from "@/lib/types/type";
 import {ProfileHeader} from "@/component/profile-header";
 import {ProjectPreviewItem} from "@/component/project/project-preview-item";
-import {TaskItemList} from "@/component/task/task-item-list";
+import {useWelcomeScreen} from "@/hooks/use-welcome-screen";
 
 
 
 export function AchievementWidget ()  {
-    const {greeting , welcome} = welcomeScreen();
-    const user = '';
+    const {time, userWelcome} = useWelcomeScreen();
     const tasks : TaskPreview[] = [
         {
             id:1,
@@ -53,7 +52,7 @@ export function AchievementWidget ()  {
 
     return(
         <div className='grid items-start gap-8'>
-            <ProfileHeader heading={greeting} text={welcome('Ivan')}/>
+            <ProfileHeader heading={time.current} text={userWelcome.current}/>
         <div
         className='
           rounded-md
