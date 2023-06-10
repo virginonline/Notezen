@@ -1,8 +1,6 @@
-import { getServerSession } from "next-auth/next"
-
-import { authOption } from "@/lib/auth"
+import {getCookie} from "cookies-next";
 
 export async function getCurrentUser() {
-    const session = await getServerSession(authOption)
-    return session?.user
+    const session = getCookie('token')
+    return session
 }

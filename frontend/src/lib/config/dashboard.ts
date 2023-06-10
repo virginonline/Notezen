@@ -4,11 +4,11 @@ export const dashboardConfig: DashboardConfig = {
     mainNav: [
         {
             title: "Проекты",
-            href: "/projects",
+            href: "/dashboard/projects",
         },
         {
             title: "Задачи",
-            href: "/tasks",
+            href: "/dashboard/task",
         },
         {
             title: "Профиль",
@@ -26,5 +26,11 @@ export const dashboardConfig: DashboardConfig = {
             href: "/dashboard/task",
             icon: "post",
         },
+        {
+            title: "Настройки",
+            href: "/dashboard/settings",
+            icon: "project",
+        },
+
     ],
 }

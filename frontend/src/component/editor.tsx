@@ -25,6 +25,7 @@ import { SelectLabel } from "@radix-ui/react-select";
 import {useToast} from "@/component/ui/use-toast";
 import {Priorities, TaskStatuses} from "@/component/data";
 import {CommentItem} from "@/component/comment/comment";
+import {SelectPriority} from "@/component/select-priority";
 
 interface EditorProps {
   task: Pick<Task, "id" | "title" | "description" | "author">;
@@ -123,19 +124,7 @@ export function Editor() {
                 </SelectGroup>
               </SelectContent>
             </Select>
-            <Select>
-              <SelectTrigger className="w-[500px] mb-3">
-                <SelectValue placeholder="Выберите приоритет задачи" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Приоритет задачи</SelectLabel>
-                  {Priorities.map((priority) => (
-                      <SelectItem key={priority.value} value={priority.value}>{priority.label}</SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            <SelectPriority/>
             <Select>
               <SelectTrigger className="w-[500px] mb-3">
                 <SelectValue placeholder="Выберите статус задачи" />

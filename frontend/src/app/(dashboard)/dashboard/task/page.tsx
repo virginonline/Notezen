@@ -3,6 +3,7 @@ import {DashboardHeader} from "@/component/header";
 import {TaskCreateButton} from "@/component/task/task-create-button";
 import {Task} from "@/lib/types/type";
 import {TaskItemList} from "@/component/task/task-item-list";
+import {TasksToolbar} from "@/component/task/tasks-toolbar";
 
 export default async function TasksPage() {
     const tasks : Task[] = [
@@ -29,6 +30,7 @@ export default async function TasksPage() {
             <DashboardHeader heading={"Задачи"} text={"Здесь храняться ваши задачи"}>
                 <TaskCreateButton/>
             </DashboardHeader>
+            <TasksToolbar/>
             <TaskItemList tasks={tasks}/>
         </DashboardShell>
     )
