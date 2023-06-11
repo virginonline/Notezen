@@ -2,20 +2,18 @@
 
 import { authSchema } from "@/lib/validation/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {redirect, useSearchParams} from "next/navigation";
+import {useRouter} from "next/navigation";
 import {HTMLAttributes, useState} from "react";
-import { useForm, useFormState } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { Icons } from "./ui/icons";
-import {signIn} from "next-auth/react";
-import {api} from "@/lib/api";
-import {login} from "@/lib/api/auth";
-import {date} from "zod";
 import {setCookie} from "cookies-next";
+import {User} from "@/lib/types/type";
+import {login} from "@/lib/api/auth";
 
 interface UserAuthFormProps extends HTMLAttributes<HTMLDivElement> {
   label: string
@@ -24,6 +22,7 @@ interface UserAuthFormProps extends HTMLAttributes<HTMLDivElement> {
 type FormData = z.infer<typeof authSchema>;
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -32,27 +31,14 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     resolver: zodResolver(authSchema),
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const searchParams = useSearchParams();
-
   async function onSubmit(data: FormData) {
     setIsLoading(true)
     const {username,password} = data;
-    const {token} = await login(data.username, data.password);
-    setCookie('_token', token)
-    alert(token)
-    /*const user : {id:string, username : string, token : string} = await api.post('auth/login', {
-      json: {
-        username: username,
-        password: password
-      }
-    }).json();
-    if(user) {
-      alert(JSON.stringify(user))
-    }*/
-
-    //alert(JSON.stringify(register))
-
+    const user : User = await login(data.username, data.password);
+    setCookie('_user', user)
+    alert(user)
     setIsLoading(false);
+    router.push('/dashboard')
   }
 
   return (

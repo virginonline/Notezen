@@ -1,9 +1,9 @@
 import { buttonVariants } from "@/component/ui/button";
 import { Icons } from "@/component/ui/icons";
-import { UserAuthForm } from "@/component/user-auth-form";
 import { cn } from "@/lib/utils";
 import { Metadata } from "next";
 import Link from "next/link";
+import {UserRegisterForm} from "@/component/user-register-form";
 
 export const metadata: Metadata = {
     title: "Register",
@@ -35,7 +35,7 @@ export default function LoginPage() {
               Введите имя пользователя и пароль для регистрации
             </p>
           </div>
-          <UserAuthForm label={"Регистрация"}/>
+          <UserRegisterForm label={"Регистрация"}/>
           <p className="px-8 text-center text-sm text-muted-foreground">
             <Link
               href="/login"

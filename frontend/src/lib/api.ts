@@ -1,4 +1,5 @@
 import ky from "ky";
+import {getCurrentUser} from "@/lib/session";
 
 export  const api = ky.create({
     prefixUrl: 'http://localhost:8083/api/v1/',
@@ -7,8 +8,8 @@ export  const api = ky.create({
         'Content-Type': 'application/json',
     }
 });
-export  const apiSecure = api.extend({
-    headers: {
-
+export const secureApi = api.extend({
+    headers:{
+        Authorization: `Bearer ${getCurrentUser()?.token}`
     }
 })

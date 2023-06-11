@@ -26,6 +26,7 @@ import {useToast} from "@/component/ui/use-toast";
 import {Priorities, TaskStatuses} from "@/component/data";
 import {CommentItem} from "@/component/comment/comment";
 import {SelectPriority} from "@/component/select-priority";
+import {useCurrentUser} from "@/hooks/useCurrentUser";
 
 interface EditorProps {
   task: Pick<Task, "id" | "title" | "description" | "author">;
@@ -33,7 +34,7 @@ interface EditorProps {
 type formData = z.infer<typeof taskSchema>;
 
 export function Editor() {
-
+  const user = useCurrentUser();
   const ref = useRef<EditorJS>();
   const { register, handleSubmit } = useForm<formData>({
     resolver: zodResolver(taskSchema),

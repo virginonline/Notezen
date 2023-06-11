@@ -7,3 +7,9 @@ export const login = async (username:string, password :string) : Promise<User> =
         password:password
     }}).json())
 }
+export const registerUser = async (username:string, password :string) : Promise<User>=> {
+    return (await api.post('auth/register', {json: {
+            username:username,
+            password:password
+        }}).json())
+}
