@@ -1,10 +1,10 @@
 import * as z from "zod"
 
 export const taskSchema = z.object({
-    title: z.string().min(10).max(50),
-    project: z.string(),
-    status:z.string().optional(),
-    author:z.string(),
-    priority: z.string(),
-    content: z.string().min(10)
+    title: z.string().optional(),
+    author: z.string().optional(),
+    project: z.string().optional(),
+    priority: z.string().optional(),
+    status: z.string().optional(),
+    content: z.any().optional()
 })

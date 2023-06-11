@@ -12,7 +12,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
   List<Task> findByProject(Long id);
 
   @Query("select (count(t) > 0) from Task t where t.title = :title and t.project.title = :project")
-  Boolean existsByTitle(String title, String project);
+  boolean existsByTitle(String title, String project);
 
   @Query("select t from Task t where t.createdBy.id = :userId or t.assignedTo.id = :userId")
   List<Task> getUserTasks(Long userId);

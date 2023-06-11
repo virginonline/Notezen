@@ -39,7 +39,7 @@ public class TaskService implements ITaskService {
   private final TaskMapper taskMapper;
 
   @Override
-  public Task addTask(TaskDto taskDto) {
+  public TaskDto addTask(TaskDto taskDto) {
     if (taskRepository.existsByTitle(taskDto.getTitle(), taskDto.getProject())) {
       return null;
     }
@@ -59,25 +59,25 @@ public class TaskService implements ITaskService {
 
     task.setExpirationDate(Timestamp.valueOf(taskDto.getExpirationDate()));
 
-    return taskRepository.save(task);
+    return taskMapper.toDto(taskRepository.save(task));
   }
 
   @Override
-  public Task assignTask(Long taskId, String username) {
+  public TaskDto assignTask(Long taskId, String username) {
     Task task = taskRepository.findById(taskId).orElseThrow();
     User u = userRepository.findByUsername(username).orElseThrow();
     task.setAssignedTo(u);
-    return taskRepository.save(task);
+    return taskMapper.toDto(taskRepository.save(task));
   }
 
   @Override
-  public List<Task> getProjectTasks(Long projectId) {
-    return taskRepository.findByProject(projectId);
+  public List<TaskDto> getProjectTasks(Long projectId) {
+    return taskMapper.toDtoList(taskRepository.findByProject(projectId));
   }
 
   @Override
-  public List<Task> getUserTasks(Long userId) {
-    return taskRepository.getUserTasks(userId);
+  public List<TaskDto> getUserTasks(Long userId) {
+    return taskMapper.toDtoList(taskRepository.getUserTasks(userId));
   }
 
   @Override
@@ -106,6 +106,11 @@ public class TaskService implements ITaskService {
   }
 
   @Override
+  public TaskDto getTask(Long id) {
+    return taskMapper.toDto(taskRepository.findById(id).orElseThrow());
+  }
+
+  @Override
   public List<TaskPreviewDto> getTaskPreview(Long userId, String filter) {
     LocalDateTime now = LocalDateTime.now();
     List<Task> tasks;
@@ -124,6 +129,6 @@ public class TaskService implements ITaskService {
                     .expirationDate(task.getExpirationDate().toLocalDateTime())
                     .project(task.getProject().getTitle())
                     .build())
-        .collect(Collectors.toList());
+        .toList();
   }
 }

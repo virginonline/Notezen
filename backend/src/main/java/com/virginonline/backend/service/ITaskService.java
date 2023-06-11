@@ -9,17 +9,18 @@ import java.util.List;
 // TODO
 // change return type to DTO
 public interface ITaskService {
-  Task addTask(TaskDto taskDto);
+  TaskDto addTask(TaskDto taskDto);
 
-  Task assignTask(Long taskId, String username);
+  TaskDto assignTask(Long taskId, String username);
 
-  List<Task> getProjectTasks(Long projectId);
+  List<TaskDto> getProjectTasks(Long projectId);
 
-  List<Task> getUserTasks(Long userId);
+  List<TaskDto> getUserTasks(Long userId);
 
   Boolean removeTask(Long id);
 
   List<TaskPreviewDto> getTaskPreview(Long userId, String filter);
 
   TaskDto update(TaskDto taskDto);
+  TaskDto getTask(Long id);
 }

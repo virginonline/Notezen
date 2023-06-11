@@ -36,7 +36,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     const {username,password} = data;
     const user : User = await login(data.username, data.password);
     setCookie('_user', user)
-    alert(user)
     setIsLoading(false);
     router.push('/dashboard')
   }

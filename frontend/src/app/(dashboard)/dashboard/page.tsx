@@ -7,9 +7,6 @@ export const metadata = {
     title: 'Профиль',
     description: 'Приложение для трекинга задач',
 }
-interface DashboardPageProps {
-    user : User
-}
 export default async function DashboardPage() {
     const _user = cookies().has('_user')
     if(!_user) {

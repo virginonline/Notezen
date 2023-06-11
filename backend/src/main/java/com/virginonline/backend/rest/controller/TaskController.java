@@ -19,16 +19,27 @@ public class TaskController {
   private final TaskService taskService;
 
   @GetMapping("/user/{userId}")
-  public List<Task> findTasks(@PathVariable("userId") Long id) {
+  public List<TaskDto> findTasks(@PathVariable("userId") Long id) {
     return taskService.getUserTasks(id);
   }
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Task createTask(@RequestBody TaskDto task) {
+  public TaskDto createTask(@RequestBody TaskDto task) {
     return taskService.addTask(task);
   }
-
+  @GetMapping("/info/{taskId}")
+  public TaskDto getAboutTask(@PathVariable Long taskId) {
+      return taskService.getTask(taskId);
+  }
+  @PatchMapping("/update")
+  public TaskDto updateTask(@RequestBody TaskDto taskDto) {
+    return taskService.update(taskDto);
+  }
+  @DeleteMapping("{taskId}")
+  public boolean deleteTask(@PathVariable Long taskId) {
+    return taskService.removeTask(taskId);
+  }
   @GetMapping("/{taskId}/comments")
   public List<CommentDto> getCommentsTask(@PathVariable Long taskId) {
     // TODO
@@ -47,7 +58,7 @@ public class TaskController {
   }
 
   @PatchMapping("/{taskId}")
-  public Task assignTo(@PathVariable Long taskId, @RequestParam String username) {
+  public TaskDto assignTo(@PathVariable Long taskId, @RequestParam String username) {
     return taskService.assignTask(taskId, username);
   }
 }
