@@ -1,7 +1,8 @@
 import {Icons} from "@/component/ui/icons";
 import {Icon} from "lucide-react";
+import {Priority, ProjectStatus, TaskStatus} from "@/lib/types/type";
 
-export const TaskStatuses = [
+export const TaskStatuses : TaskStatus[] = [
     {
         label: 'Запланированно',
         value: 'PLANNED',
@@ -24,11 +25,7 @@ export const TaskStatuses = [
     },
 ]
 
-export type ProjectStatus = {
-    label:string,
-    value:string,
-    icon : Icon
-}
+
 export const ProjectStatuses : ProjectStatus[] = [
     {
         label: 'Запланированно',
@@ -52,7 +49,7 @@ export const ProjectStatuses : ProjectStatus[] = [
     },
 ]
 
-export const Priorities = [
+export const Priorities : Priority[] = [
     {
         label: 'Высокий',
         value: 'HIGH',

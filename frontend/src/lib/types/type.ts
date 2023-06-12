@@ -1,3 +1,5 @@
+import {Icon} from "lucide-react";
+
 export type User = {
     id:string,
     username:string,
@@ -19,6 +21,13 @@ export type Project = {
     owner:string
 }
 
+export type ProjectStatus = {
+    label:string,
+    value:string,
+    icon : Icon
+}
+export type TaskStatus =  ProjectStatus;
+export type Priority = TaskStatus;
 export type Task = {
     id:number,
     title:string,

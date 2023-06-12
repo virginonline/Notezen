@@ -23,7 +23,7 @@ import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle} from "@/
 import {Input} from "@/component/ui/input";
 import {Button} from "@/component/ui/button";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/component/ui/select";
-import {ProjectStatus, ProjectStatuses} from "@/component/data";
+import {ProjectStatuses} from "@/component/data";
 
 
 async function deletePost(projectId: string) {
