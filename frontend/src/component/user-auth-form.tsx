@@ -11,7 +11,7 @@ import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { Icons } from "./ui/icons";
-import {setCookie} from "cookies-next";
+import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import {User} from "@/lib/types/type";
 import {login} from "@/lib/api/auth";
 
@@ -35,7 +35,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     setIsLoading(true)
     const {username,password} = data;
     const user : User = await login(data.username, data.password);
-    setCookie('_user', user)
+    setCookie(null,'_user', JSON.stringify(user))
     setIsLoading(false);
     router.push('/dashboard')
   }

@@ -4611,7 +4611,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:^0.4.0":
+"cookie@npm:^0.4.0, cookie@npm:^0.4.1":
   version: 0.4.2
   resolution: "cookie@npm:0.4.2"
   checksum: a00833c998bedf8e787b4c342defe5fa419abd96b32f4464f718b91022586b8f1bafbddd499288e75c037642493c83083da426c6a9080d309e3bd90fd11baa9b
@@ -5727,6 +5727,7 @@ __metadata:
     next-auth: ^4.22.1
     next-contentlayer: ^0.3.2
     next-themes: ^0.2.1
+    nookies: ^2.5.2
     postcss: latest
     react: 18.2.0
     react-dom: 18.2.0
@@ -8432,6 +8433,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nookies@npm:^2.5.2":
+  version: 2.5.2
+  resolution: "nookies@npm:2.5.2"
+  dependencies:
+    cookie: ^0.4.1
+    set-cookie-parser: ^2.4.6
+  checksum: 4cc6fd8d0ab9fce840ccdb161eefe9dee581f441429fc729f279924491ebd1c12c220f889b6e315d66f8ea00bef944966969c966c957a6b9918ced7d7f9cc8a8
+  languageName: node
+  linkType: hard
+
 "nopt@npm:^6.0.0":
   version: 6.0.0
   resolution: "nopt@npm:6.0.0"
@@ -9914,6 +9925,13 @@ __metadata:
   version: 2.0.0
   resolution: "set-blocking@npm:2.0.0"
   checksum: 6e65a05f7cf7ebdf8b7c75b101e18c0b7e3dff4940d480efed8aad3a36a4005140b660fa1d804cb8bce911cac290441dc728084a30504d3516ac2ff7ad607b02
+  languageName: node
+  linkType: hard
+
+"set-cookie-parser@npm:^2.4.6":
+  version: 2.6.0
+  resolution: "set-cookie-parser@npm:2.6.0"
+  checksum: bf11ebc594c53d84588f1b4c04f1b8ce14e0498b1c011b3d76b5c6d5aac481bbc3f7c5260ec4ce99bdc1d9aed19f9fc315e73166a36ca74d0f12349a73f6bdc9
   languageName: node
   linkType: hard
 
