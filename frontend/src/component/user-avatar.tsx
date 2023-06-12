@@ -12,7 +12,7 @@ export function UserAvatar({user} : UserAvatarProps) {
         <Avatar>
                 <AvatarImage alt="Picture" src='/images/placeholder' />
                 <AvatarFallback>
-                    <span className="sr-only">{user?.username.slice(0,2)}</span>
+                    <span className="sr-only">{user.username.slice(0,2)}</span>
                     <Icons.user className="h-4 w-4" />
                 </AvatarFallback>
         </Avatar>

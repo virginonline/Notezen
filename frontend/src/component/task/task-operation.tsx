@@ -2,7 +2,7 @@
 
 import {Task} from "@/lib/types/type";
 import {useRouter} from "next/navigation";
-import {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { toast } from "@/component/ui/use-toast"
 import {Icons} from "@/component/ui/icons";
 import {
@@ -19,6 +19,11 @@ import {
     AlertDialogFooter,
     AlertDialogHeader, AlertDialogTitle
 } from "@/component/ui/alert-dialog";
+import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle} from "@/component/ui/dialog";
+import {Button} from "@/component/ui/button";
+import Label from "@/component/ui/label";
+import {Input} from "@/component/ui/input";
+import Link from "next/link";
 
 
 async function deleteTask(taskId: string) {
@@ -40,7 +45,9 @@ interface TaskOperationProps {
 export function TaskOperation({task} : TaskOperationProps) {
     const router = useRouter();
     const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false)
+    const [showDelegateDialog, setShowDelegateDialog] = useState<boolean>(false)
     const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false)
+
     return (
         <>
             <DropdownMenu>
@@ -49,50 +56,20 @@ export function TaskOperation({task} : TaskOperationProps) {
                     <span className="sr-only">Открыть</span>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
+                    <DropdownMenuItem>
+                        <Link href={`/editor/${task.id}`} className="flex w-full">
+                            Редактировать
+                        </Link>
+                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
                         className="flex cursor-pointer items-center text-destructive focus:text-destructive"
                         onSelect={() => setShowDeleteAlert(true)}
                     >
-                        Удалить
+                        Delete
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
-            <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
-                <AlertDialogContent>
-                    <AlertDialogHeader>
-                        <AlertDialogTitle>
-                            Вы уверены что хотите удалить данную задачу?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                            Это действие нельзя будет отменить.
-                        </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel>Закрыть</AlertDialogCancel>
-                        <AlertDialogAction
-                            onClick={async (event) => {
-                                event.preventDefault()
-                                setIsDeleteLoading(true)
-                                const deleted = await deleteTask(task.id.toString())
-                                if (deleted) {
-                                    setIsDeleteLoading(false)
-                                    setShowDeleteAlert(false)
-                                    router.refresh()
-                                }
-                            }}
-                            className="bg-red-600 focus:ring-red-600"
-                        >
-                            {isDeleteLoading ? (
-                                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                            ) : (
-                                <Icons.trash className="mr-2 h-4 w-4" />
-                            )}
-                            <span>Удалить</span>
-                        </AlertDialogAction>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialog>
         </>
     )
 }

@@ -17,16 +17,16 @@ import {getCurrentUser} from "@/lib/session";
 
 export function UserAccountNav() {
     const route = useRouter();
-    const user = getCurrentUser();
+    const user : User = getCurrentUser();
     return(
         <DropdownMenu>
             <DropdownMenuTrigger>
-                <UserAvatar user={user!}/>
+                <UserAvatar user={user}/>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 <div className="flex items-center justify-start gap-2 p-2">
                     <div className="flex flex-col space-y-1 leading-none">
-                        <p className="font-medium">{user!.username}</p>
+                        <p className="font-medium">{user.username}</p>
                     </div>
                 </div>
                 <DropdownMenuSeparator />
@@ -47,15 +47,6 @@ export function UserAccountNav() {
                     }}
                 >
                     Выйти
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                    className="cursor-pointer"
-                    onSelect={(event) => {
-                        event.preventDefault()
-                        alert(user as User)
-                    }}
-                >
-                    test
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

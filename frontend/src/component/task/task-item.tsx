@@ -17,7 +17,7 @@ export function TaskItem({task}: TaskItemProps) {
         ">
             <div className="grid gap-1">
                 <Link
-                    href={`/dashboard/projects/${task.id}`}
+                    href={`/dashboard/task/${task.id}`}
                     className="font-semibold hover:underline"
                 >
                     {task.title}
