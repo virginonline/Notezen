@@ -10,6 +10,6 @@ export  const api = ky.create({
 });
 export const secureApi = api.extend({
     headers:{
-        Authorization: `Bearer ${getCurrentUser()?.token}`
+//        Authorization: `Bearer ${getCurrentUser()?.token}`
     }
 })

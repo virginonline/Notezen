@@ -1,7 +1,8 @@
 import * as z from "zod"
 
 export const projectSchema = z.object({
-    title: z.string().min(10).max(125),
-    status:z.string(),
-    description : z.string().optional()
+    title: z.string().optional(),
+    status:z.string().optional(),
+    description : z.string().optional(),
+    author: z.string().optional()
 })

@@ -11,7 +11,7 @@ import {api} from "@/lib/api";
 import {toast} from "@/component/ui/use-toast";
 import {cn} from "@/lib/utils";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/component/ui/card";
-import {Label} from "@/component/ui/label";
+import Label from "@/component/ui/label";
 import {Input} from "@/component/ui/input";
 import {buttonVariants} from "@/component/ui/button";
 import {Icons} from "@/component/ui/icons";

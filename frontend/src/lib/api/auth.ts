@@ -1,7 +1,5 @@
 import {api} from "@/lib/api";
 import {User} from "@/lib/types/type";
-import {cookies} from "next/headers";
-import {getCookie, removeCookies} from "cookies-next";
 import {getCurrentUser} from "@/lib/session";
 import {destroyCookie} from "nookies";
 

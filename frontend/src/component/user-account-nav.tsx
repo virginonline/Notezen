@@ -18,7 +18,6 @@ import {getCurrentUser} from "@/lib/session";
 export function UserAccountNav() {
     const route = useRouter();
     const user = getCurrentUser();
-    console.log(typeof document !== 'undefined' ? document.cookie : 'ssr')
     return(
         <DropdownMenu>
             <DropdownMenuTrigger>

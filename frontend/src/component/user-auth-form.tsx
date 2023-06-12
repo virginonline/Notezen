@@ -6,7 +6,6 @@ import {useRouter} from "next/navigation";
 import {HTMLAttributes, useState} from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
@@ -14,6 +13,7 @@ import { Icons } from "./ui/icons";
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import {User} from "@/lib/types/type";
 import {login} from "@/lib/api/auth";
+import Label from "@/component/ui/label";
 
 interface UserAuthFormProps extends HTMLAttributes<HTMLDivElement> {
   label: string
