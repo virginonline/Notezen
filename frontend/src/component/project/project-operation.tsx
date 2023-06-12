@@ -2,7 +2,7 @@
 
 import {Project} from "@/lib/types/type";
 import {useRouter} from "next/navigation";
-import {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { toast } from "@/component/ui/use-toast"
 import {Icons} from "@/component/ui/icons";
 import {
@@ -19,6 +19,11 @@ import {
     AlertDialogFooter,
     AlertDialogHeader, AlertDialogTitle
 } from "@/component/ui/alert-dialog";
+import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle} from "@/component/ui/dialog";
+import {Input} from "@/component/ui/input";
+import {Button} from "@/component/ui/button";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/component/ui/select";
+import {ProjectStatus, ProjectStatuses} from "@/component/data";
 
 
 async function deletePost(projectId: string) {
@@ -35,36 +40,81 @@ async function deletePost(projectId: string) {
 }
 
 interface ProjectOperationProps {
-    project: Pick<Project, "id" | "title">
+    project: Pick<Project, "id" | "title" | "status" | "description">
 }
 
 export function ProjectOperation({project} : ProjectOperationProps) {
-    const router = useRouter()
+
+    const router = useRouter();
     const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false)
     const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false)
-
+    const [showEditDialog, setShowEditDialog] = useState<boolean>(false);
+    const [status, setStatus] = useState<string>('');
+    useEffect(() => {
+        const value = ProjectStatuses.find(pr => pr.label == project.status) || '';
+        if(typeof value !== "string") {
+            setStatus(value.value);
+        }
+        console.log(status)
+    }, [project.status, status])
     return (
         <>
-            <DropdownMenu>
-                <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md border transition-colors hover:bg-muted">
-                    <Icons.ellipsis className="h-4 w-4" />
-                    <span className="sr-only">Открыть</span>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                        className="flex cursor-pointer items-center text-destructive focus:text-destructive"
-                        onSelect={() => setShowDeleteAlert(true)}
-                    >
-                        Удалить проект
-                    </DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
+            <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
+                <DropdownMenu>
+                    <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md border transition-colors hover:bg-muted">
+                        <Icons.ellipsis className="h-4 w-4" />
+                        <span className="sr-only">Open</span>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                            className="flex cursor-pointer items-center"
+                            onSelect={() => {
+                                setShowEditDialog(true)
+                                document.body.style.pointerEvents = ""
+                            }}
+                        >
+                            Редактировать проект
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                            className="flex cursor-pointer items-center text-destructive focus:text-destructive"
+                            onSelect={() => {
+                                setShowDeleteAlert(true)
+                                document.body.style.pointerEvents = ""
+                            }}
+                        >
+                            Удалить проект
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Редактирование проекта</DialogTitle>
+                    </DialogHeader>
+                    <Input id="description" defaultValue={project.description || ''} placeholder='Описание проекта' className="col-span-3" />
+                    <Select onValueChange={setStatus} value={status}>
+                            <SelectTrigger className="mb-3">
+                                <SelectValue placeholder="Статус проекта"/>
+                            </SelectTrigger>
+                        <SelectContent>
+                            {ProjectStatuses.map((status) => (
+                                <SelectItem key={status.value}
+                                            value={status.value}>{status.label}</SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                    <DialogFooter>
+                        <Button onClick={() => {
+                            //todo patch
+                        }}>Сохранить изменения</Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
             <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         <AlertDialogTitle>
-                            Вы уверены что хотите удалить данный проект?
+                            Вы действительно хотите удалить этот проект?
                         </AlertDialogTitle>
                         <AlertDialogDescription>
                             Это действие нельзя будет отменить.
@@ -76,7 +126,10 @@ export function ProjectOperation({project} : ProjectOperationProps) {
                             onClick={async (event) => {
                                 event.preventDefault()
                                 setIsDeleteLoading(true)
-                                const deleted = await deletePost(project.id.toString())
+                                //todo
+                                // delete project
+                                const deleted = true;
+
                                 if (deleted) {
                                     setIsDeleteLoading(false)
                                     setShowDeleteAlert(false)

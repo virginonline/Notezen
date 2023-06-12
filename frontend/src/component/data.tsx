@@ -1,4 +1,5 @@
 import {Icons} from "@/component/ui/icons";
+import {Icon} from "lucide-react";
 
 export const TaskStatuses = [
     {
@@ -23,14 +24,19 @@ export const TaskStatuses = [
     },
 ]
 
-export const ProjectStatuses = [
+export type ProjectStatus = {
+    label:string,
+    value:string,
+    icon : Icon
+}
+export const ProjectStatuses : ProjectStatus[] = [
     {
         label: 'Запланированно',
         value: 'PLANNED',
         icon: Icons.circle
     },
     {
-        label: 'В прогрессе',
+        label: 'В процессе',
         value: 'IN_PROGRESS',
         icon: Icons.circle
     },

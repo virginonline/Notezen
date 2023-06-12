@@ -3,11 +3,10 @@ import {DashboardShell} from "@/component/shell";
 import {DashboardHeader} from "@/component/header";
 import {TaskCreateButton} from "@/component/task/task-create-button";
 import React from "react";
-import {Task} from "@/lib/types/type";
+import {Task, User} from "@/lib/types/type";
 import {TaskItem} from "@/component/task/task-item";
 
-//todo
-//fix filter
+
 export default async function TasksPage() {
     const tasks: Task[] = [
         {
@@ -49,3 +48,4 @@ export default async function TasksPage() {
         </DashboardShell>
     )
 }
+

@@ -15,6 +15,8 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {projectSchema} from "@/lib/validation/project";
 import * as z from "zod";
 import {useRouter} from "next/navigation";
+import {User} from "@/lib/types/type";
+import {useCurrentUser} from "@/hooks/useCurrentUser";
 
 type FormData = z.infer<typeof projectSchema>;
 
@@ -25,7 +27,7 @@ const ProjectButton: FC = () => {
     const form = useForm<FormData>({
         resolver: zodResolver(projectSchema),
     });
-    const user = getCurrentUser();
+    const {user} = useCurrentUser();
     const {toast} = useToast();
     useEffect(() => {
         if (showProjectCreateButton) {

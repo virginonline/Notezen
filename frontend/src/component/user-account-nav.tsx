@@ -11,14 +11,16 @@ import {UserAvatar} from "@/component/user-avatar";
 import Link from "next/link";
 import {logout} from "@/lib/api/auth";
 import {useRouter} from "next/navigation";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {getCurrentUser} from "@/lib/session";
+import {parseCookies} from "nookies";
+import {useCurrentUser} from "@/hooks/useCurrentUser";
 
 
 export function UserAccountNav() {
     const route = useRouter();
-    const user : User = getCurrentUser();
-    return(
+    const {user} = useCurrentUser();
+return(
         <DropdownMenu>
             <DropdownMenuTrigger>
                 <UserAvatar user={user}/>

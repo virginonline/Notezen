@@ -1,3 +1,4 @@
+"use client"
 import {Task} from "@/lib/types/type";
 import Link from "next/link";
 import {TaskOperation} from "@/component/task/task-operation";
@@ -8,13 +9,7 @@ interface TaskItemProps {
 }
 export function TaskItem({task}: TaskItemProps) {
     return(
-        <div className="
-        flex
-        items-center
-        justify-between
-        p-4
-        mt-6
-        ">
+        <div className="flex items-center justify-between p-4">
             <div className="grid gap-1">
                 <Link
                     href={`/dashboard/task/${task.id}`}

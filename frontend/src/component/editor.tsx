@@ -18,12 +18,13 @@ import {getCurrentUser} from "@/lib/session";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/component/ui/select";
 import {Priorities, TaskStatuses} from "@/component/data";
 import Form, {FormControl, FormField, FormItem} from "@/component/react-hook-form/form";
+import {useCurrentUser} from "@/hooks/useCurrentUser";
 
 
 type FormData = z.infer<typeof taskSchema>;
 
 export function Editor() {
-    const user = getCurrentUser();
+    const {user} = useCurrentUser();
     const router = useRouter();
     if (!user) {
         router.push('/login')

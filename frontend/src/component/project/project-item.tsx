@@ -28,7 +28,7 @@ export function ProjectItem({project}: ProjectItemProps) {
                     </p>
                 </div>
             </div>
-            <ProjectOperation project={{ id: project.id, title: project.title }} />
+            <ProjectOperation project={{ id: project.id, title: project.title, status: project.status, description: project.description }} />
         </div>
     )
 }

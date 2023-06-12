@@ -8,7 +8,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {toast} from "@/component/ui/use-toast";
 import {useRouter} from "next/navigation";
 import {cn} from "@/lib/utils";
-import {Label} from "@/component/ui/label";
+import Label from "@/component/ui/label"
 import {Input} from "@/component/ui/input";
 import {buttonVariants} from "@/component/ui/button";
 import {Icons} from "@/component/ui/icons";

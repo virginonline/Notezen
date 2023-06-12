@@ -10,7 +10,7 @@ interface UserAvatarProps extends AvatarProps {
 export function UserAvatar({user} : UserAvatarProps) {
     return (
         <Avatar>
-                <AvatarImage alt="Picture" src='/images/placeholder' />
+                <AvatarImage alt="Picture" src='/placeholder.png' />
                 <AvatarFallback>
                     <span className="sr-only">{user.username.slice(0,2)}</span>
                     <Icons.user className="h-4 w-4" />
