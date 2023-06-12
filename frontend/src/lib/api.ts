@@ -2,7 +2,7 @@ import ky from "ky";
 import {getCurrentUser} from "@/lib/session";
 
 export  const api = ky.create({
-    prefixUrl: 'http://localhost:8083/api/v1/',
+    prefixUrl: process.env.NEXT_PUBLIC_API_URL,
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
