@@ -1,11 +1,22 @@
 import {getCurrentUser} from "@/lib/session";
-import {redirect} from "next/navigation";
 import {Editor} from "@/component/editor";
+import {api} from "@/lib/api";
+import {Task} from "@/lib/types/type";
 
 interface EditorPageProps {
     params: { taskId: string }
 }
+async function getTask(taskId:string) {
+    const user = getCurrentUser();
+    const task : Task = {author: "", description: "", id: 0, project: "", status: "", title: ""};
+/*     = await api.get(`/tasks/${taskId}`, {
+        headers: {
+            Authorization: `Bearer ${user.token}`
+        }
+    }).json();*/
+}
 export default async function EditorPage({ params }: EditorPageProps) {
+    const data = await getTask(params.taskId);
     return(
         <Editor/>
     )

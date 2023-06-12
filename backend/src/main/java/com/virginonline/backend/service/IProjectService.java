@@ -18,4 +18,5 @@ public interface IProjectService {
   ProjectDto update(ProjectDto project);
 
   List<ProjectPreviewDto> getProjectPreview(Long userId);
+  List<ProjectDto> getAuthorProject(Long userId);
 }

@@ -90,4 +90,10 @@ public class ProjectService implements IProjectService {
                     .build())
         .collect(Collectors.toList());
   }
+
+  @Override
+  public List<ProjectDto> getAuthorProject(Long userId) {
+    List<Project> projects = projectRepository.findByAuthor(userId);
+    return mapper.toDtoList(projects);
+  }
 }

@@ -29,7 +29,10 @@ public class ProjectController {
   public List<Project> getProjectsByUser(@PathVariable("userId") Long id) {
     return projectService.getUserProjects(id);
   }
-
+  @GetMapping("/author/{userId}")
+  public List<ProjectDto> getAuthorProject(@PathVariable("userId") Long id) {
+    return projectService.getAuthorProject(id);
+  }
   @GetMapping("/preview/{userId}")
   public List<ProjectPreviewDto> previewList(@PathVariable("userId") Long userId) {
     return projectService.getProjectPreview(userId);

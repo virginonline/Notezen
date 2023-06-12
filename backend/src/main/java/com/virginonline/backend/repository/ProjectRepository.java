@@ -21,4 +21,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
   List<Project> getUserActivityProjects(Long userId);
 
   Boolean existsByTitle(String title);
+  @Query("select p from Project p where p.createdBy.id = :id")
+  List<Project> findByAuthor(Long id);
 }

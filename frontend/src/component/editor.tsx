@@ -11,20 +11,28 @@ import TextareaAutosize from "react-textarea-autosize";
 import {Icons} from "./ui/icons";
 import Link from "next/link";
 import {cn} from "@/lib/utils";
-import {buttonVariants} from "./ui/button";
-import {useToast} from "@/component/ui/use-toast";
+import {Button, buttonVariants} from "./ui/button";
+import { format } from "date-fns"
 
-import {getCurrentUser} from "@/lib/session";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/component/ui/select";
+import {Select, SelectContent, SelectItem, SelectLabel, SelectTrigger, SelectValue} from "@/component/ui/select";
 import {Priorities, TaskStatuses} from "@/component/data";
 import Form, {FormControl, FormField, FormItem} from "@/component/react-hook-form/form";
-import {useCurrentUser} from "@/hooks/useCurrentUser";
+import {Project, Task, User} from "@/lib/types/type";
+import {Calendar} from "@/component/calendar";
+import { ru } from 'date-fns/locale';
+import {Popover, PopoverContent, PopoverTrigger} from "@/component/ui/popover";
+import {CalendarIcon} from "lucide-react";
 
 
 type FormData = z.infer<typeof taskSchema>;
+interface EditorProps {
+    task?: Task,
+    availableProjects?: Project[]
+}
 
-export function Editor() {
-    const {user} = useCurrentUser();
+export function Editor({task, availableProjects} : EditorProps) {
+    const user : User = {id: "23", token: "asdasd", username: "asdjklklasjd"}
+    const [project, setProjects] = useState<Project[]>(availableProjects || []);
     const router = useRouter();
     if (!user) {
         router.push('/login')
@@ -33,9 +41,19 @@ export function Editor() {
     const form = useForm<FormData>({
         resolver: zodResolver(taskSchema),
     });
-    const {toast} = useToast();
     const [isMounted, setIsMounted] = useState<boolean>(false);
     const [isSaving, setIsSaving] = useState<boolean>(false);
+    useEffect(() => {
+        if(task !== undefined && task !== null) {
+            form.setValue('author', task.author)
+            form.setValue('status', task.status)
+            form.setValue('priority', task.priority)
+            form.setValue('project', task.project)
+            form.setValue('content', JSON.parse(task.description))
+            form.setValue('title', task.title)
+
+        }
+    })
     const initEditor = useCallback(async () => {
         const EditorJS = (await import("@editorjs/editorjs")).default;
         const Header = (await import("@editorjs/header")).default;
@@ -120,13 +138,16 @@ export function Editor() {
                                         <Select onValueChange={field.onChange}>
                                             <FormControl>
                                                 <SelectTrigger className="mb-3">
-                                                    <SelectValue placeholder="В какой проект добавить задачу"/>
+                                                    {project ? (
+                                                        <SelectValue placeholder="Нет доступных проектов" />
+                                                    ) : (
+                                                        <SelectValue placeholder="В какой проект добавить задачу"/>)}
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
-                                                <SelectItem value="3">1</SelectItem>
-                                                <SelectItem value="1">2</SelectItem>
-                                                <SelectItem value="2">3</SelectItem>
+                                                {project.map((project) => (
+                                                    <SelectItem key={project.id} value={project.title}>{project.title}</SelectItem>
+                                                ))}
                                             </SelectContent>
                                         </Select>
                                     </FormItem>
@@ -172,6 +193,42 @@ export function Editor() {
                                             </SelectContent>
                                         </Select>
                                     </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name={'expirationDate'}
+                                render={({field}) => (
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <FormControl>
+                                                <Button
+                                                    variant={"outline"}
+                                                    className={cn(
+                                                        "mx-auto w-full",
+                                                        !field.value && "text-muted-foreground"
+                                                    )}
+                                                >
+                                                    {field.value ? (
+                                                        format(field.value, "PPP")
+                                                    ) : (
+                                                        <span>Выбрать дату</span>
+                                                    )}
+                                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                                </Button>
+                                            </FormControl>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="mx-auto p-0" align="start">
+                                            <Calendar
+                                                locale={ru}
+                                                className='w-full'
+                                                mode="single"
+                                                selected={field.value}
+                                                onSelect={field.onChange}
+                                                initialFocus
+                                            />
+                                        </PopoverContent>
+                                    </Popover>
                                 )}
                             />
                         </div>
