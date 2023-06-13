@@ -11,7 +11,7 @@ import java.util.List;
 public interface IProjectService {
   ProjectDto addProject(ProjectDto projectDto);
 
-  List<Project> getUserProjects(Long userId);
+  List<ProjectDto> getUserProjects(Long userId);
 
   Boolean removeProject(Long projectId);
 

@@ -8,3 +8,6 @@ export  const api = ky.create({
         'Content-Type': 'application/json',
     }
 });
+
+export class HTTPError extends Error {
+}

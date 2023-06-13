@@ -1,4 +1,3 @@
-import {getCurrentUser} from "@/lib/session";
 import {Editor} from "@/component/editor";
 import {Task} from "@/lib/types/type";
 

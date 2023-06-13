@@ -8,13 +8,14 @@ import {Input} from "@/component/ui/input";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/component/ui/select";
 import {ProjectStatuses} from "@/component/data";
 import {Icons} from "@/component/ui/icons";
-import {useToast} from "@/component/ui/use-toast";
+import {toast, useToast} from "@/component/ui/use-toast";
 import {cn} from "@/lib/utils";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {projectSchema} from "@/lib/validation/project";
 import * as z from "zod";
 import {useRouter} from "next/navigation";
 import {useCurrentUser} from "@/hooks/useCurrentUser";
+import {addProject} from "@/lib/api/project";
 
 type FormData = z.infer<typeof projectSchema>;
 
@@ -35,15 +36,20 @@ const ProjectButton: FC = () => {
 
     async function onSubmit(data: FormData) {
         const {status, description, title} = data
+        console.warn(JSON.stringify(data));
         setIsSaving(true)
-        const response = {
-            title: title,
-            description: description,
-            status: status,
-            author: user.username
+        const response = await addProject(title || '',description,status || '')
+        setIsSaving(false)
+        if(!response.ok) {
+            return toast({
+                title: "Что-то пошло не так",
+                description: "Не удалось создать проект, попробуйте попытку позднее",
+                variant: "destructive"
+            })
         }
-        console.log(JSON.stringify(response))
-        setIsSaving(false);
+        toast({
+            description: 'Проект создан'
+        })
         setShowProjectCreateButton(false)
         router.refresh();
     }

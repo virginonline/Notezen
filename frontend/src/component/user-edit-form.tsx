@@ -7,7 +7,6 @@ import {useRouter} from "next/navigation";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import React, {useState} from "react";
-import {api} from "@/lib/api";
 import {toast} from "@/component/ui/use-toast";
 import {cn} from "@/lib/utils";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/component/ui/card";
@@ -15,13 +14,15 @@ import Label from "@/component/ui/label";
 import {Input} from "@/component/ui/input";
 import {buttonVariants} from "@/component/ui/button";
 import {Icons} from "@/component/ui/icons";
+import {editUser} from "@/lib/api/auth";
 
 interface UserNameFormProps extends React.HTMLAttributes<HTMLFormElement> {
     user: Pick<User, "id" | "username">
 }
 
 type FormData = z.infer<typeof userEditSchema>
-export function UserEditForm({user, className, ...props} : UserNameFormProps) {
+
+export function UserEditForm({user, className, ...props}: UserNameFormProps) {
     const router = useRouter();
     const {
         handleSubmit,
@@ -34,26 +35,27 @@ export function UserEditForm({user, className, ...props} : UserNameFormProps) {
         }
     })
     const [isSaving, setIsSaving] = useState<boolean>(false);
+
     async function onSubmit(data: FormData) {
         setIsSaving(true);
-        const response = await api.patch(`/users/${user.id}`, {
-            json: {
-                username: user.username
-            }
-        })
+        const response = await editUser(data.username);
         setIsSaving(false);
-        if(response.ok) {
+
+        if (!response.ok) {
             return toast({
                 title: "Что-то пошло не так",
                 description: "Имя пользователя не было обновлено, попробуйте еще раз",
                 variant: "destructive"
             })
         }
+
         toast({
             description: "Имя пользователя было обновлено.",
         })
+
         router.refresh();
     }
+
     return (
         <form
             className={cn(className)}

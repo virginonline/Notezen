@@ -14,15 +14,14 @@ import com.virginonline.backend.repository.UserRepository;
 import com.virginonline.backend.service.IProjectService;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -55,8 +54,10 @@ public class ProjectService implements IProjectService {
 
 
   @Override
-  public List<Project> getUserProjects(Long userId) {
-    return projectRepository.findByAuthorId(userId);
+  public List<ProjectDto> getUserProjects(Long userId) {
+    List<ProjectDto> projects = mapper.toDtoList(projectRepository.findByAuthorId(userId));
+    log.info("fetched projects : {}", projects);
+    return projects;
   }
 
   @Override
@@ -88,7 +89,7 @@ public class ProjectService implements IProjectService {
                     .taskCount(projectRepository.countTaskByProject(project))
                     .title(project.getTitle())
                     .build())
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override
