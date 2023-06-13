@@ -21,4 +21,4 @@ target/
 *.iws
 *.iml
 *.ipr
-!frontend/.env.local
+!/frontend/.env.local
