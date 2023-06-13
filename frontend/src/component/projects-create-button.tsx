@@ -8,14 +8,12 @@ import {Input} from "@/component/ui/input";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/component/ui/select";
 import {ProjectStatuses} from "@/component/data";
 import {Icons} from "@/component/ui/icons";
-import {getCurrentUser} from "@/lib/session";
 import {useToast} from "@/component/ui/use-toast";
 import {cn} from "@/lib/utils";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {projectSchema} from "@/lib/validation/project";
 import * as z from "zod";
 import {useRouter} from "next/navigation";
-import {User} from "@/lib/types/type";
 import {useCurrentUser} from "@/hooks/useCurrentUser";
 
 type FormData = z.infer<typeof projectSchema>;

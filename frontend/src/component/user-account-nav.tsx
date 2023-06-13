@@ -6,14 +6,11 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@/component/ui/dropdown-menu";
-import {User} from "@/lib/types/type";
 import {UserAvatar} from "@/component/user-avatar";
 import Link from "next/link";
 import {logout} from "@/lib/api/auth";
 import {useRouter} from "next/navigation";
-import React, {useEffect, useState} from "react";
-import {getCurrentUser} from "@/lib/session";
-import {parseCookies} from "nookies";
+import React from "react";
 import {useCurrentUser} from "@/hooks/useCurrentUser";
 
 

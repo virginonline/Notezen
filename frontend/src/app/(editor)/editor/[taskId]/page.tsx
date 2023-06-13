@@ -1,13 +1,11 @@
 import {getCurrentUser} from "@/lib/session";
 import {Editor} from "@/component/editor";
-import {api} from "@/lib/api";
 import {Task} from "@/lib/types/type";
 
 interface EditorPageProps {
     params: { taskId: string }
 }
 async function getTask(taskId:string) {
-    const user = getCurrentUser();
     const task : Task = {author: "", description: "", id: 0, project: "", status: "", title: ""};
 /*     = await api.get(`/tasks/${taskId}`, {
         headers: {

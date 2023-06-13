@@ -52,12 +52,7 @@ public class TaskController {
     return taskService.getTaskPreview(userId, filter);
   }
 
-  @PatchMapping
-  public TaskDto update(@RequestBody TaskDto task) {
-    return null;
-  }
-
-  @PatchMapping("/{taskId}")
+  @PatchMapping("/delegate/{taskId}")
   public TaskDto assignTo(@PathVariable Long taskId, @RequestParam String username) {
     return taskService.assignTask(taskId, username);
   }

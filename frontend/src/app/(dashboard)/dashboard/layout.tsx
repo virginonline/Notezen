@@ -2,10 +2,7 @@ import {MainNav} from "@/component/main-nav";
 import {DashboardNav} from "@/component/nav";
 import {SiteFooter} from "@/component/site-footer";
 import {dashboardConfig} from "@/lib/config/dashboard";
-import {getCurrentUser} from "@/lib/session";
 import {UserAccountNav} from "@/component/user-account-nav";
-import {User} from "@/lib/types/type";
-import {parseCookies} from "nookies";
 
 interface DashboardLayoutProps {
     children?: React.ReactNode

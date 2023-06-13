@@ -22,3 +22,17 @@ export const logout = async () =>  {
         destroyCookie(null,'_user')
     }
 }
+
+export const editUser = async (username: string) => {
+    const user = getCurrentUser();
+    user.username = username;
+    const response = await api.patch(`/users/update/${user.id}`, {
+        headers: {
+            Authorization: `Bearer ${getCurrentUser().token}`
+        },
+        json: {
+            username: username
+        }
+    });
+    return response;
+}

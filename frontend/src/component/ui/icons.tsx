@@ -31,11 +31,11 @@ import {
 } from "lucide-react"
   
   export type Icon = LucideIcon
-  
+
   export const Icons = {
     logo: Command,
     close: X,
-      minus: Minus,
+    minus: Minus,
     project: Folder,
     spinner: Loader2,
     chevronLeft: ChevronLeft,

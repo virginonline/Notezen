@@ -14,7 +14,7 @@ import {cn} from "@/lib/utils";
 import {Button, buttonVariants} from "./ui/button";
 import { format } from "date-fns"
 
-import {Select, SelectContent, SelectItem, SelectLabel, SelectTrigger, SelectValue} from "@/component/ui/select";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/component/ui/select";
 import {Priorities, TaskStatuses} from "@/component/data";
 import Form, {FormControl, FormField, FormItem} from "@/component/react-hook-form/form";
 import {Project, Task, User} from "@/lib/types/type";
@@ -43,6 +43,7 @@ export function Editor({task, availableProjects} : EditorProps) {
     });
     const [isMounted, setIsMounted] = useState<boolean>(false);
     const [isSaving, setIsSaving] = useState<boolean>(false);
+
     useEffect(() => {
         if(task !== undefined && task !== null) {
             form.setValue('author', task.author)
@@ -137,12 +138,16 @@ export function Editor({task, availableProjects} : EditorProps) {
                                     <FormItem>
                                         <Select onValueChange={field.onChange}>
                                             <FormControl>
-                                                <SelectTrigger className="mb-3">
-                                                    {project ? (
+                                                    {project.length === 0 ? (
+                                                        <SelectTrigger className="mb-3" disabled={true}>
                                                         <SelectValue placeholder="Нет доступных проектов" />
+                                                        </SelectTrigger>
+
                                                     ) : (
-                                                        <SelectValue placeholder="В какой проект добавить задачу"/>)}
-                                                </SelectTrigger>
+                                                        <SelectTrigger className="mb-3">
+                                                        <SelectValue placeholder="В какой проект добавить задачу"/>
+                                                        </SelectTrigger>
+                                                    )}
                                             </FormControl>
                                             <SelectContent>
                                                 {project.map((project) => (
@@ -212,7 +217,7 @@ export function Editor({task, availableProjects} : EditorProps) {
                                                     {field.value ? (
                                                         format(field.value, "PPP")
                                                     ) : (
-                                                        <span>Выбрать дату</span>
+                                                        <span>Выбрать срок выполнения</span>
                                                     )}
                                                     <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                                                 </Button>

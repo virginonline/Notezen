@@ -8,8 +8,3 @@ export  const api = ky.create({
         'Content-Type': 'application/json',
     }
 });
-export const secureApi = api.extend({
-    headers:{
-//        Authorization: `Bearer ${getCurrentUser()?.token}`
-    }
-})

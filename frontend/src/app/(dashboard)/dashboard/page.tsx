@@ -1,17 +1,19 @@
 import {AchievementWidget} from "@/component/achievement-widget";
 
-import {User} from "@/lib/types/type";
 import {cookies} from "next/headers";
 import {redirect} from "next/navigation";
+import {NextPageContext} from "next";
 export const metadata = {
     title: 'Профиль',
     description: 'Приложение для трекинга задач',
 }
-export default async function DashboardPage() {
-    const _user = cookies().has('_user')
-    if(!_user) {
+DashboardPage.getInitialProps = async (ctx: NextPageContext) => {
+    if(!cookies().has('_user')) {
         redirect('/login')
     }
+}
+export default async function DashboardPage() {
+
     return(
       <div>
         <AchievementWidget/>

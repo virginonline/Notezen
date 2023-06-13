@@ -1,11 +1,12 @@
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {welcomeScreen} from "@/lib/web/state/ui/welcome";
 import {getCurrentUser} from "@/lib/session";
-import {User} from "@/lib/types/type";
+import {useCurrentUser} from "@/hooks/useCurrentUser";
 
 export function useWelcomeScreen() {
     const [time,setTime] = useState('');
-    const user : User = getCurrentUser();
+    const {user} = useCurrentUser();
+
     const [userWelcome, setUserWelcome] = useState('');
     useEffect(() => {
         const {greeting, welcome} = welcomeScreen();

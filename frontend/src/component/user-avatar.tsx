@@ -1,6 +1,5 @@
 import {Avatar, AvatarFallback, AvatarImage} from "@/component/ui/avatar";
 import {Icons} from '@/component/ui/icons';
-import {getCurrentUser} from "@/lib/session";
 import {User} from "@/lib/types/type";
 import {AvatarProps} from "@radix-ui/react-avatar";
 
