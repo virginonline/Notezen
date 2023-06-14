@@ -1,7 +1,11 @@
 import {api, HTTPError} from "@/lib/api";
 import {getCurrentUser} from "@/lib/session";
 import {Project, ProjectPreview, User} from "@/lib/types/type";
+import {parseCookies} from "nookies";
 
+
+//TODO
+// rewrite fo store
 export const addProject = async (title: string, description: string = '', status: string) => {
     const user = getCurrentUser();
     return api.post(`projects/new`, {
@@ -30,16 +34,15 @@ export const editProject = async (title: string, description: string = '', statu
         }
     })
 }
-export const deleteProject = async (taskId:string) => {
+export const deleteProject = async (projectId:number) => {
     const user = getCurrentUser();
-    return api.delete(`projects/delete/${taskId}`, {
+    return api.delete(`projects/delete/${projectId}`, {
         headers: {
             Authorization: `Bearer ${user.token}`
         },
     })
 }
-export const getProjects = async () : Promise<Project[]> => {
-    const user: User = getCurrentUser();
+export const getProjects = async (user : User) : Promise<Project[]> => {
     const response = await api.get(`projects/user/${user.id}`, {
         headers: {
             Authorization: `Bearer ${user.token}`

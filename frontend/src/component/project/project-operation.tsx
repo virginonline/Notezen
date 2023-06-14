@@ -1,6 +1,6 @@
 "use client"
 
-import {Project} from "@/lib/types/type";
+import {Project, ProjectStatus} from "@/lib/types/type";
 import {useRouter} from "next/navigation";
 import React, {useEffect, useState} from "react";
 import { toast } from "@/component/ui/use-toast"
@@ -20,41 +20,34 @@ import {
     AlertDialogHeader, AlertDialogTitle
 } from "@/component/ui/alert-dialog";
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle} from "@/component/ui/dialog";
-import {Input} from "@/component/ui/input";
 import {Button} from "@/component/ui/button";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/component/ui/select";
 import {ProjectStatuses} from "@/component/data";
+import {useCurrentUser} from "@/hooks/useCurrentUser";
+import TextareaAutosize from "react-textarea-autosize";
+import {deleteProject} from "@/lib/api/project";
 
-
-async function deletePost(projectId: string) {
-    const response = false;
-
-    if (!response) {
-        toast({
-            title: "Something went wrong.",
-            description: "Your post was not deleted. Please try again.",
-            variant: "destructive",
-        })
-    }
-    return true
-}
 
 interface ProjectOperationProps {
-    project: Pick<Project, "id" | "title" | "status" | "description">
+    project: Pick<Project, "id" | "title" | "status" | "description" | "owner">
 }
 
 export function ProjectOperation({project} : ProjectOperationProps) {
-
+    const {user} = useCurrentUser();
     const router = useRouter();
     const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false)
     const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false)
     const [showEditDialog, setShowEditDialog] = useState<boolean>(false);
-    const [status, setStatus] = useState<string>('');
+    const [status, setStatus] = useState<ProjectStatus>({
+        label:'',
+        value:'',
+    });
     useEffect(() => {
-        const value = ProjectStatuses.find(pr => pr.label == project.status) || '';
-        if(typeof value !== "string") {
-            setStatus(value.value);
-        }
+        const value = ProjectStatuses.find(pr => pr.value == project.status);
+        setStatus(value || {
+            label:'',
+            value:'',
+        });
         console.log(status)
     }, [project.status, status])
     return (
@@ -72,16 +65,19 @@ export function ProjectOperation({project} : ProjectOperationProps) {
                                 setShowEditDialog(true)
                                 document.body.style.pointerEvents = ""
                             }}
+                            disabled={project.owner != user.username}
                         >
                             Редактировать проект
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                             className="flex cursor-pointer items-center text-destructive focus:text-destructive"
+                            disabled={project.owner != user.username}
                             onSelect={() => {
                                 setShowDeleteAlert(true)
                                 document.body.style.pointerEvents = ""
                             }}
+
                         >
                             Удалить проект
                         </DropdownMenuItem>
@@ -91,8 +87,15 @@ export function ProjectOperation({project} : ProjectOperationProps) {
                     <DialogHeader>
                         <DialogTitle>Редактирование проекта</DialogTitle>
                     </DialogHeader>
-                    <Input id="description" defaultValue={project.description || ''} placeholder='Описание проекта' className="col-span-3" />
-                    <Select onValueChange={setStatus} value={status}>
+                    <TextareaAutosize id="description"
+                                      defaultValue={project.description || ''}
+                                      placeholder='Описание проекта'
+                                      className="resize-none appearance-none overflow-hidden rounded-md border border-input bg-transparent px-3 py-2 focus:outline-none"
+
+                    />
+                    <Select onValueChange={(event) => {
+                        const st = ProjectStatuses.find((ps) => ps.value == event)
+                        setStatus(prevState => st || prevState)}} value={status?.value}>
                             <SelectTrigger className="mb-3">
                                 <SelectValue placeholder="Статус проекта"/>
                             </SelectTrigger>
@@ -126,11 +129,16 @@ export function ProjectOperation({project} : ProjectOperationProps) {
                             onClick={async (event) => {
                                 event.preventDefault()
                                 setIsDeleteLoading(true)
-                                //todo
-                                // delete project
+                                const response = await deleteProject(project.id)
+
                                 const deleted = true;
 
-                                if (deleted) {
+                                if (response.ok) {
+                                    toast({
+                                        title: "Проект удален",
+                                        description: "Вы удалили проект",
+                                        variant: "destructive",
+                                    })
                                     setIsDeleteLoading(false)
                                     setShowDeleteAlert(false)
                                     router.refresh()

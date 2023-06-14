@@ -24,7 +24,7 @@ export type Project = {
 export type ProjectStatus = {
     label:string,
     value:string,
-    icon : Icon
+    icon? : Icon
 }
 export type TaskStatus =  ProjectStatus;
 export type Priority = TaskStatus;

@@ -1,12 +1,14 @@
 import {DashboardShell} from "@/component/shell";
 import {DashboardHeader} from "@/component/header";
 import ProjectsCreateButton from "@/component/projects-create-button";
-import {Project} from "@/lib/types/type";
+import {Project, User} from "@/lib/types/type";
 import {ProjectItemList} from "@/component/project/project-item-list";
 import {getProjects} from "@/lib/api/project";
+import {getCurrentUserFromServer} from "@/lib/session";
 
 async function fetchProjects() : Promise<Project[]> {
-    return await getProjects();
+    const user : User = await getCurrentUserFromServer();
+    return await getProjects(user);
 }
 export default async function ProjectsPage() {
     const projects : Project[] = await fetchProjects();

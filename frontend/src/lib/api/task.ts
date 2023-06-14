@@ -1,7 +1,9 @@
-import {Task} from "@/lib/types/type";
+import {Task, User} from "@/lib/types/type";
 import {api, HTTPError} from "@/lib/api";
 import {getCurrentUser} from "@/lib/session";
 
+//TODO
+// rewrite fo store
 export const addTask = async (task: Task) => {
     const user = getCurrentUser();
     const response = await api.post(`tasks/new`, {
@@ -17,7 +19,15 @@ export const addTask = async (task: Task) => {
     })
 }
 export const editTask = async (task: Task) => {
+    const user : User = getCurrentUser();
+    const response = await api.patch(`tasks/edit/${task.id}`, {
+        headers: {
+            Authorization: `Bearer ${user.token}`
+        },
+        json: {
 
+        }
+    })
 }
 export const deleteTask = async (taskId: string) => {
     const user = getCurrentUser();
