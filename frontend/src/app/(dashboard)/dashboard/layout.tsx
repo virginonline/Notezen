@@ -3,6 +3,7 @@ import {DashboardNav} from "@/component/nav";
 import {SiteFooter} from "@/component/site-footer";
 import {dashboardConfig} from "@/lib/config/dashboard";
 import {UserAccountNav} from "@/component/user-account-nav";
+import React from "react";
 
 interface DashboardLayoutProps {
     children?: React.ReactNode

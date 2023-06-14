@@ -5,7 +5,11 @@ import React from "react";
 import {Task} from "@/lib/types/type";
 import {TaskItem} from "@/component/task/task-item";
 import {getTasksOfUser} from "@/lib/api/task";
+import {Metadata} from "next";
 
+const metadata: Metadata = {
+    title: 'Проекты'
+}
 async function getTask() : Promise<Task[]> {
     return await getTasksOfUser();
 }

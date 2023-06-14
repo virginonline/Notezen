@@ -4,13 +4,19 @@ import { UserAuthForm } from "@/component/user-auth-form";
 import { cn } from "@/lib/utils";
 import { Metadata } from "next";
 import Link from "next/link";
+import {getCurrentUserFromServer} from "@/lib/session";
+import {cookies} from "next/headers";
+import {redirect} from "next/navigation";
 
 export const metadata: Metadata = {
     title: "Авторизация",
     description: "Авторизация в аккаунт",
 }
 
-export default function LoginPage() {
+export default async function LoginPage() {
+    if(cookies().has('_user')) {
+        redirect('/dashboard')
+    }
     return (
       <div className="container flex h-screen w-screen flex-col items-center justify-center">
         <Link

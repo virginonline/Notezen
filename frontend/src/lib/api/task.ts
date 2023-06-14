@@ -46,12 +46,10 @@ export const delegateTask = async (taskId: number, assignedUsername: string) => 
         }
     });
 }
-export const getTasksOfProject = async (projectId: string) => {
 
-}
 export const getTasksOfUser = async (): Promise<Task[]> => {
     const user = await getCurrentUserFromServer();
-    const response = await api.get(`tasks/user/${user.id}`, {
+    const response = await api.get(`tasks/by-user/${user.id}`, {
         headers: {
             Authorization: `Bearer ${user.token}`
         }

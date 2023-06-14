@@ -27,6 +27,10 @@ public class ProjectController {
   public List<ProjectDto> getProjectsByUser(@PathVariable("userId") Long userId) {
     return projectService.getUserProjects(userId);
   }
+  @GetMapping("/info/{projectId}")
+  public ProjectDto getProjectInfo(@PathVariable("projectId") Long projectId) {
+      return projectService.getProject(projectId);
+  }
   @GetMapping("/author/{userId}")
   public List<ProjectDto> getAuthorProject(@PathVariable("userId") Long id) {
     return projectService.getAuthorProject(id);

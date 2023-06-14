@@ -3,7 +3,7 @@ import {getProjects} from "@/lib/api/project";
 import {getCurrentUserFromServer} from "@/lib/session";
 import {getTask} from "@/lib/api/task";
 
-interface EditorPageProps {
+type EditorPageProps =  {
     params: { taskId: string }
 }
 async function fetchTask(taskId:string)  {

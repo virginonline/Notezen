@@ -6,11 +6,11 @@ import Link from "next/link";
 import {UserRegisterForm} from "@/component/user-register-form";
 
 export const metadata: Metadata = {
-    title: "Register",
+    title: "Регирстрация",
     description: "Регистрация аккаунта",
 }
 
-export default function LoginPage() {
+export default async function RegisterPage() {
     return (
       <div className="container flex h-screen w-screen flex-col items-center justify-center">
         <Link

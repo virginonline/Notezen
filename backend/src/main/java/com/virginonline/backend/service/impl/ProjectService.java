@@ -97,4 +97,10 @@ public class ProjectService implements IProjectService {
     List<Project> projects = projectRepository.findByAuthor(userId);
     return mapper.toDtoList(projects);
   }
+
+  @Override
+  public ProjectDto getProject(Long projectId) {
+    Project project = projectRepository.findById(projectId).orElseThrow();
+    return mapper.toDto(project);
+  }
 }

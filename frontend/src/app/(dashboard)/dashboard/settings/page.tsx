@@ -4,6 +4,11 @@ import {UserEditForm} from "@/component/user-edit-form";
 import {User} from "@/lib/types/type";
 import {cookies} from "next/headers";
 import {redirect} from "next/navigation";
+import {Metadata} from "next";
+
+const metadata: Metadata = {
+    title: 'Настройки'
+}
 
 export default async function SettingsPage() {
     const cookieStore = cookies();

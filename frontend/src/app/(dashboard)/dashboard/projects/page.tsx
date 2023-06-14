@@ -5,6 +5,12 @@ import {Project, User} from "@/lib/types/type";
 import {ProjectItemList} from "@/component/project/project-item-list";
 import {getProjects} from "@/lib/api/project";
 import {getCurrentUserFromServer} from "@/lib/session";
+import {Metadata} from "next";
+
+const metadata: Metadata = {
+    title: 'Проекты',
+    description: 'Проекты пользователя'
+}
 
 async function fetchProjects() : Promise<Project[]> {
     const user : User = await getCurrentUserFromServer();
