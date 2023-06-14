@@ -38,11 +38,10 @@ return(
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                     className="cursor-pointer"
-                    onSelect={(event) => {
+                    onSelect={async (event) => {
                         event.preventDefault()
-                        logout().then(r => {
-                            route.push(`${window.location.origin}/login`)
-                        });
+                        await logout();
+                        route.push(`${window.location.origin}/login`)
                     }}
                 >
                     Выйти

@@ -2,24 +2,31 @@ import {Editor} from "@/component/editor";
 import {getProjects} from "@/lib/api/project";
 import {getCurrentUserFromServer} from "@/lib/session";
 import {getTask} from "@/lib/api/task";
+import {Comments} from "@/component/comment/comments-list";
+import {TaskPreview} from "@/component/task/task-preview-page";
+import {cookies} from "next/headers";
+import {redirect} from "next/navigation";
 
 type EditorPageProps =  {
     params: { taskId: string }
 }
 async function fetchTask(taskId:string)  {
-    const user = await getCurrentUserFromServer();
-    const task =  await getTask(taskId)
-    const projects = await getProjects(user)
-    return {task, projects};
+    return await getTask(taskId)
+
 }
 
 export default async function TaskPage({ params }: { params: { taskId: string } }) {
-    const {task, projects} = await fetchTask(params.taskId);
+    if(!cookies().has('_user')) {
+        redirect('/login');
+    }
+    const task = await fetchTask(params.taskId);
     return(
         <div>
-            <Editor
-            task={task}
-            availableProjects={projects}
+            <TaskPreview
+                task={task}
+            />
+            <Comments
+                task={task}
             />
         </div>
     )

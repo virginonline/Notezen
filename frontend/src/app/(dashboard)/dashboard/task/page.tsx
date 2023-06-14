@@ -6,6 +6,8 @@ import {Task} from "@/lib/types/type";
 import {TaskItem} from "@/component/task/task-item";
 import {getTasksOfUser} from "@/lib/api/task";
 import {Metadata} from "next";
+import {cookies} from "next/headers";
+import {redirect} from "next/navigation";
 
 const metadata: Metadata = {
     title: 'Проекты'
@@ -15,6 +17,9 @@ async function getTask() : Promise<Task[]> {
 }
 
 export default async function TasksPage() {
+    if(!cookies().has('_user')) {
+        redirect('/login');
+    }
     const tasks: Task[] = await getTask();
     return (
         <DashboardShell>

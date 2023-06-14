@@ -5,22 +5,17 @@ import {User} from "@/lib/types/type";
 import {cookies} from "next/headers";
 import {redirect} from "next/navigation";
 import {Metadata} from "next";
+import {getCurrentUserFromServer} from "@/lib/session";
 
 const metadata: Metadata = {
     title: 'Настройки'
 }
 
 export default async function SettingsPage() {
-    const cookieStore = cookies();
-
-    const _user = cookieStore.has('_user')
-
-    if(!_user) {
-        redirect('/login')
+    if(!cookies().has('_user')) {
+        redirect('/login');
     }
-
-    const cook = cookieStore.get('_user')?.value!;
-    const usr : User = JSON.parse(cook)
+    const usr : User = await getCurrentUserFromServer();
 
     return(
         <DashboardShell>

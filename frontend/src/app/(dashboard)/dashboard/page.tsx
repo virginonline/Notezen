@@ -9,6 +9,9 @@ export const metadata : Metadata = {
 }
 
 export default async function DashboardPage() {
+    if(!cookies().has('_user')) {
+        redirect('/login');
+    }
     return(
       <div>
         <AchievementWidget/>

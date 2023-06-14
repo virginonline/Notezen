@@ -6,6 +6,8 @@ import {ProjectItemList} from "@/component/project/project-item-list";
 import {getProjects} from "@/lib/api/project";
 import {getCurrentUserFromServer} from "@/lib/session";
 import {Metadata} from "next";
+import {cookies} from "next/headers";
+import {redirect} from "next/navigation";
 
 const metadata: Metadata = {
     title: 'Проекты',
@@ -17,6 +19,9 @@ async function fetchProjects() : Promise<Project[]> {
     return await getProjects(user);
 }
 export default async function ProjectsPage() {
+    if(!cookies().has('_user')) {
+        redirect('/login');
+    }
     const projects : Project[] = await fetchProjects();
     return (
         <DashboardShell>

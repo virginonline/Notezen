@@ -57,6 +57,12 @@ public class TaskController {
     // return Comments dtos
     return null;
   }
+  @PostMapping("/{taskId}/add-comment")
+  public List<CommentDto> addComment(@PathVariable Long taskId, @RequestBody CommentDto commentDto) {
+    // TODO
+    // return Comments dtos
+    return null;
+  }
 
   @GetMapping("/preview/{userId}")
   public List<TaskPreviewDto> previewList(@PathVariable Long userId, @RequestParam String filter) {
