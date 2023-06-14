@@ -1,5 +1,5 @@
 "use client"
-import React, {FC, useCallback, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Select,
     SelectContent,
@@ -13,76 +13,86 @@ import {TaskPreviewItem} from "@/component/task/task-preview";
 import {ProjectPreview, TaskPreview} from "@/lib/types/type";
 import {ProfileHeader} from "@/component/profile-header";
 import {ProjectPreviewItem} from "@/component/project/project-preview-item";
-import {useWelcomeScreen} from "@/hooks/use-welcome-screen";
+import {welcomeScreen} from "@/lib/web/state/ui/welcome";
+import {getCurrentUserFromServer} from "@/lib/session";
 
 
 
-export function AchievementWidget ()  {
-    const [time, userWelcome] = useWelcomeScreen();
-
-    const tasks : TaskPreview[] = [
+export function AchievementWidget() {
+    //const [time, userWelcome] = await useWelcomeScreen();
+    const [time, setTime] = useState('')
+    const [greeting, setGreeting] = useState('');
+    useEffect(() => {
+        (async () => {
+            const user = await getCurrentUserFromServer();
+            const {greeting, welcome} = welcomeScreen();
+            setTime(greeting)
+            setGreeting(welcome(user.username))
+        })();
+    }, [])
+    const tasks: TaskPreview[] = [
         {
-            id:1,
-            title:"Разработать ИС",
+            id: 1,
+            title: "Разработать ИС",
             description: "Разработать конфигурацию",
         },
         {
-            id:2,
-            title:"Рефакторинг сервиса пользователей",
+            id: 2,
+            title: "Рефакторинг сервиса пользователей",
             description: "Выполнить рефакторинг сервиса пользователей",
         },
         {
-            id:12,
-            title:"Рефакторинг сервиса пользователей",
+            id: 12,
+            title: "Рефакторинг сервиса пользователей",
             description: "Выполнить рефакторинг сервиса пользователей",
         },
         {
-            id:232,
-            title:"Рефакторинг сервиса пользователей",
+            id: 232,
+            title: "Рефакторинг сервиса пользователей",
             description: "Выполнить рефакторинг сервиса пользователей",
         },
 
     ]
-    const projects : ProjectPreview[] = [
+    const projects: ProjectPreview[] = [
         {
-            id:1,
-            title:"Проект 1",
+            id: 1,
+            title: "Проект 1",
             taskCount: "100"
         }
     ]
 
-    return(
+    return (
         <div className='grid items-start gap-8'>
-            <ProfileHeader heading={time} text={userWelcome}/>
-        <div
-        className='
+            <ProfileHeader heading={time} text={greeting}/>
+            <div
+                className='
           rounded-md
           border
           p-6
           flex gap-6 md:gap-10
         '>
-            <Select>
-                <SelectTrigger className='
+                <Select>
+                    <SelectTrigger className='
                    h-[25px]
                    w-[200px]
                 '>
-                    <SelectValue placeholder='Выбрать промежуток'/>
-                </SelectTrigger>
-                <SelectContent>
+                        <SelectValue placeholder='Выбрать промежуток'/>
+                    </SelectTrigger>
+                    <SelectContent>
                         <SelectGroup>
                             <SelectLabel>Отображение статистики за</SelectLabel>
                             <SelectItem value='WEEK'>За неделю</SelectItem>
                             <SelectItem value='MONTH'>За месяц</SelectItem>
                         </SelectGroup>
-                </SelectContent>
-            </Select>
-            <div>
-                Выполнено задач {100}
+                    </SelectContent>
+                </Select>
+                <div>
+                    Выполнено задач {100}
+                </div>
+                <div>
+                    Получено задач {6}
+                </div>
             </div>
-            <div>
-                Получено задач {6}
-            </div>
-        </div>
             <div className='
             grid
             gap-4

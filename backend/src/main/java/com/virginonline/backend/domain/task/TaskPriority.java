@@ -4,7 +4,7 @@ import com.virginonline.backend.domain.task.enums.ETaskPriority;
 import jakarta.persistence.*;
 
 @Entity(name = "TaskPriority")
-@Table(name = "priority")
+@Table(name = "task_priority")
 public class TaskPriority {
 
     @Id

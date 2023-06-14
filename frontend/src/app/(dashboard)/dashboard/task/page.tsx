@@ -1,4 +1,3 @@
-"use client"
 import {DashboardShell} from "@/component/shell";
 import {DashboardHeader} from "@/component/header";
 import {TaskCreateButton} from "@/component/task/task-create-button";
@@ -33,4 +32,3 @@ export default async function TasksPage() {
         </DashboardShell>
     )
 }
-

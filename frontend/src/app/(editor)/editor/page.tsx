@@ -1,15 +1,11 @@
-import { Editor } from "@/component/editor";
+import {Editor} from "@/component/editor";
 import {Project} from "@/lib/types/type";
+import {getProjects} from "@/lib/api/project";
+import {getCurrentUserFromServer} from "@/lib/session";
 
 async function availableProjects() {
-    //const user = getCurrentUser();
-    const project: Project[] = []
-    /*await api.get(`projects/author/${user.id}`, {
-        headers: {
-            Authorization: `Bearer ${user.token}`
-        }
-    }).json()*/
-    return project;
+    const user = await getCurrentUserFromServer();
+    return await getProjects(user);
 }
 
 export default async function EditorPage() {

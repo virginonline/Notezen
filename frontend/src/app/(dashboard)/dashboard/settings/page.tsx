@@ -9,6 +9,7 @@ export default async function SettingsPage() {
     const cookieStore = cookies();
 
     const _user = cookieStore.has('_user')
+
     if(!_user) {
         redirect('/login')
     }

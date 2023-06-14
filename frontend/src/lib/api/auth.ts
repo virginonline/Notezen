@@ -1,7 +1,7 @@
 import {api} from "@/lib/api";
 import {User} from "@/lib/types/type";
-import {getCurrentUser} from "@/lib/session";
 import {destroyCookie} from "nookies";
+import {getCurrentUserFromServer} from "@/lib/session";
 
 export const login = async (username:string, password :string) : Promise<User> => {
     return (await api.post('auth/login', {json: {
@@ -17,22 +17,21 @@ export const registerUser = async (username:string, password :string) : Promise<
 }
 
 export const logout = async () =>  {
-    const user = getCurrentUser();
+    const user = await getCurrentUserFromServer();
     if(user) {
         destroyCookie(null,'_user')
     }
 }
 
 export const editUser = async (username: string) => {
-    const user = getCurrentUser();
+    const user = await getCurrentUserFromServer();
     user.username = username;
-    const response = await api.patch(`/users/update/${user.id}`, {
+    return api.patch(`/users/update/${user.id}`, {
         headers: {
-            Authorization: `Bearer ${getCurrentUser().token}`
+            Authorization: `Bearer ${user.token}`
         },
         json: {
             username: username
         }
     });
-    return response;
 }

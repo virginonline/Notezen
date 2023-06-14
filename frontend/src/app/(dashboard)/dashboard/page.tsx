@@ -7,13 +7,7 @@ export const metadata = {
     title: 'Профиль',
     description: 'Приложение для трекинга задач',
 }
-DashboardPage.getInitialProps = async (ctx: NextPageContext) => {
-    if(!cookies().has('_user')) {
-        redirect('/login')
-    }
-}
 export default async function DashboardPage() {
-
     return(
       <div>
         <AchievementWidget/>

@@ -33,30 +33,35 @@ public class Task {
 
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne()
+    @JoinColumn(name = "status")
     private TasksStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne()
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "task_priority")
     private TaskPriority taskPriority;
 
     private Timestamp expirationDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "created_by", nullable = false)
     private User createdBy;
 
     @CreatedDate
     private Timestamp createdDate;
+
     @LastModifiedDate
     private Timestamp updatedDate;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "project")
     private Project project;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "assigned_to")
+    @JoinColumn(name = "assigned_to", nullable = true)
     private User assignedTo;
 
 }

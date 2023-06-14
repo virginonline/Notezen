@@ -15,7 +15,6 @@ export function ProjectItem({project}: ProjectItemProps) {
         if(typeof value !== "string") {
             setStatus(value);
         }
-        console.log(`value is ${status}`)
     }, [project.status, status])
 
     return(

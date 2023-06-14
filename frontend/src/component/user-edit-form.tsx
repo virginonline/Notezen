@@ -64,23 +64,19 @@ export function UserEditForm({user, className, ...props}: UserNameFormProps) {
         >
             <Card>
                 <CardHeader>
-                    <CardTitle>u nickname</CardTitle>
+                    <CardTitle>Имя пользователя</CardTitle>
                 </CardHeader>
                 <CardDescription>
 
                 </CardDescription>
                 <CardContent>
                     <div className='grid gap-1'>
-                        <Label className='sr-only' htmlFor='username'>
-                            u username
-                        </Label>
                         <Input
                             id='username'
                             className='w-[400px]'
                             size={32}
                             {...register("username")}
                         />
-
                     </div>
                 </CardContent>
                 <CardFooter>

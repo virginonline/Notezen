@@ -54,7 +54,7 @@ public class UserService implements IUserService {
             .findByUsername(authentication.getName())
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     List<String> rolesNames = new ArrayList<>();
-    rolesNames.add(user.getRole().getName().toString());
+    rolesNames.add(user.getRole().getName());
     UserDto userDto = userMapper.toDto(user);
     userDto.setToken(jwtUtilities.generateToken(user.getUsername(), rolesNames));
     log.info("User authorize {}", userDto.getUsername());
@@ -75,7 +75,7 @@ public class UserService implements IUserService {
     user.setCreatedDate(Instant.now());
     user.setUpdatedDate(Instant.now());
     List<String> array = new ArrayList<>();
-    array.add(user.getRole().getName().toString());
+    array.add(user.getRole().getName());
     String token = jwtUtilities.generateToken(user.getUsername(), array);
     userRepository.save(user);
     log.info("UserService : Token created : {}", token);

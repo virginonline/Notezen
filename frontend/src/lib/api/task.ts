@@ -1,25 +1,28 @@
-import {Task, User} from "@/lib/types/type";
+import {Task} from "@/lib/types/type";
 import {api, HTTPError} from "@/lib/api";
-import {getCurrentUser} from "@/lib/session";
+import {getCurrentUserFromServer} from "@/lib/session";
 
 //TODO
 // rewrite fo store
-export const addTask = async (task: Task) => {
-    const user = getCurrentUser();
-    const response = await api.post(`tasks/new`, {
+export const addTask = async ({title, description, status, priority, project, author, expiration_date } :  Task) => {
+    const user = await getCurrentUserFromServer();
+    return api.post(`tasks/new`, {
         headers: {
             Authorization: `Bearer ${user.token}`
         },
         json: {
-            title: task.title,
-            description : task.description,
-            status : task.status,
-            priority: task.priority
+            title: title,
+            description: description,
+            status: status,
+            priority: priority,
+            created_by: author,
+            project: project,
+            expiration_date: expiration_date,
         }
-    })
+    });
 }
 export const editTask = async (task: Task) => {
-    const user : User = getCurrentUser();
+    const user = await getCurrentUserFromServer();
     const response = await api.patch(`tasks/edit/${task.id}`, {
         headers: {
             Authorization: `Bearer ${user.token}`
@@ -30,16 +33,16 @@ export const editTask = async (task: Task) => {
     })
 }
 export const deleteTask = async (taskId: string) => {
-    const user = getCurrentUser();
-    return api.delete(`/task/delete/${taskId}`, {
+    const user = await getCurrentUserFromServer();
+    return api.delete(`task/delete/${taskId}`, {
         headers: {
             Authorization: `Bearer ${user.token}`
         }
     });
 }
 export const delegateTask = async (taskId: string, assignedUsername: string) => {
-    const user = getCurrentUser();
-    return api.patch(`/tasks/delegate/${taskId}?username=${assignedUsername}`, {
+    const user = await getCurrentUserFromServer();
+    return api.patch(`tasks/delegate/${taskId}?username=${assignedUsername}`, {
         headers: {
             Authorization: `Bearer ${user.token}`
         }
@@ -49,8 +52,8 @@ export const getTasksOfProject = async (projectId: string) => {
 
 }
 export const getTasksOfUser = async (): Promise<Task[]> => {
-    const user = getCurrentUser();
-    const response = await api.get(`/tasks/user/${user.id}`, {
+    const user = await getCurrentUserFromServer();
+    const response = await api.get(`tasks/by-user/${user.id}`, {
         headers: {
             Authorization: `Bearer ${user.token}`
         }
@@ -63,6 +66,20 @@ export const getTasksOfUser = async (): Promise<Task[]> => {
     return await response.json();
 }
 export const getTasks = async (userId: string) => {
+
+}
+export const getTask = async (taskId : string) : Promise<Task> => {
+    const user = await getCurrentUserFromServer();
+    console.log(taskId)
+    const response = await api.get(`tasks/info/${taskId}`, {
+        headers: {
+            Authorization: `Bearer ${user.token}`
+        }
+    });
+    if(!response.ok) {
+        new HTTPError(`Failed fetch task with id: ${taskId}`)
+    }
+    return await response.json();
 
 }
 export const getPreviewTasks = async (userId: string) => {

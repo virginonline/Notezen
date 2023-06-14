@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequestMapping("/projects")
 @RequiredArgsConstructor
@@ -21,13 +20,12 @@ public class ProjectController {
 
   @PostMapping("/new")
   public ProjectDto createProject(@RequestBody ProjectDto project) {
-      log.info("project : {}", project);
       return projectService.addProject(project);
   }
 
-  @GetMapping("/user/{userId}")
-  public List<ProjectDto> getProjectsByUser(@PathVariable("userId") Long id) {
-    return projectService.getUserProjects(id);
+  @GetMapping("/by-user/{userId}")
+  public List<ProjectDto> getProjectsByUser(@PathVariable("userId") Long userId) {
+    return projectService.getUserProjects(userId);
   }
   @GetMapping("/author/{userId}")
   public List<ProjectDto> getAuthorProject(@PathVariable("userId") Long id) {

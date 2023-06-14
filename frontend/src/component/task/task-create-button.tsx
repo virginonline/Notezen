@@ -4,12 +4,15 @@ import {ButtonProps, buttonVariants} from "@/component/ui/button";
 import {useRouter} from "next/navigation";
 import {cn} from "@/lib/utils";
 import {Icons} from "@/component/ui/icons"
-interface TaskCreateButtonProps extends ButtonProps{}
 
-export const TaskCreateButton : FC<TaskCreateButtonProps> = ({
-                                                          className,
-                                                          variant,
-                                                          ...props} : TaskCreateButtonProps) => {
+interface TaskCreateButtonProps extends ButtonProps {
+}
+
+export const TaskCreateButton: FC<TaskCreateButtonProps> = ({
+                                                                className,
+                                                                variant,
+                                                                ...props
+                                                            }: TaskCreateButtonProps) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -18,11 +21,12 @@ export const TaskCreateButton : FC<TaskCreateButtonProps> = ({
         router.refresh();
         router.push(`/editor`)
     }
-    return(
+
+    return (
         <button
             onClick={onClick}
             className={cn(
-                buttonVariants({ variant }),
+                buttonVariants({variant}),
                 {
                     "cursor-not-allowed opacity-60": isLoading,
                 },
@@ -32,9 +36,9 @@ export const TaskCreateButton : FC<TaskCreateButtonProps> = ({
             {...props}
         >
             {isLoading ? (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin"/>
             ) : (
-                <Icons.add className="mr-2 h-4 w-4" />
+                <Icons.add className="mr-2 h-4 w-4"/>
             )}
             Новая задача
         </button>

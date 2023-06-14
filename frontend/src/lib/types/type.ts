@@ -1,4 +1,5 @@
 import {Icon} from "lucide-react";
+import {OutputData} from "@editorjs/editorjs";
 
 export type User = {
     id:string,
@@ -28,16 +29,17 @@ export type ProjectStatus = {
 }
 export type TaskStatus =  ProjectStatus;
 export type Priority = TaskStatus;
+
 export type Task = {
-    id:number,
+    id?:number,
     title:string,
-    description:string,
+    description: string,
     status:string,
-    priority?:string,
+    priority:string,
     project: string,
     author:string,
     assignedTo?:string,
-    expirationDate?: Date
+    expiration_date?: Date
 
 }
 
