@@ -35,7 +35,15 @@ export function UserRegisterForm({ className, ...props }: UserRegisterFormProps)
     async function onSubmit(data: FormData) {
         setIsLoading(true)
         const {username,password, repeatPassword} = data;
-        await registerUser(username,password);
+        const response = await registerUser(username,password);
+        if(!response.ok) {
+            setIsLoading(false);
+            return toast({
+                title: 'Произошла ошибка при регистрации!',
+                description: 'Не удалось провести регистрации для аккаунта, попробуйте еще раз',
+                variant: "destructive"
+            })
+        }
         toast({
             title: 'Вы успешно зарегестрировались!',
             description: 'Происходит переадресация на главную страницу'
