@@ -56,7 +56,7 @@ export function Editor({task, availableProjects}: EditorProps) {
     useEffect(() => {
 
         form.setValue('author', user.username)
-        
+
         if (task !== undefined && task !== null) {
             form.setValue('author', task.created_by)
             form.setValue('status', task.status)
@@ -104,7 +104,6 @@ export function Editor({task, availableProjects}: EditorProps) {
         const blocks = await ref?.current?.save();
 
         const task: Task = {
-            id: null,
             created_by: data.author,
             project: data.project,
             status: data.status,
@@ -115,7 +114,6 @@ export function Editor({task, availableProjects}: EditorProps) {
         }
 
         const response = await addTask(task)
-
         if (response.ok) {
             toast({
                 title: 'Задача добавлена в проект!',

@@ -51,10 +51,25 @@ public class TaskService implements ITaskService {
     }
     log.info("task accepted {}", taskDto);
     Task task = new Task();
-    User owner = userRepository.findByUsername(taskDto.getCreatedBy()).orElseThrow(() -> new ResourceNotFoundException("User not found"));
-    Project project = projectRepository.findByTitle(taskDto.getProject()).orElseThrow(() -> new ResourceNotFoundException("Project not found"));
-    TasksStatus status = taskStatusRepository.findByStatus(ETaskStatus.findValue(taskDto.getStatus())).orElseThrow(() -> new ResourceNotFoundException("Status not found: "+ task.getStatus()));
-    TaskPriority priority = taskPriorityRepository.findByPriority(ETaskPriority.findValue(taskDto.getPriority())).orElseThrow(() -> new ResourceNotFoundException("Priority not found :" + taskDto.getPriority()));
+    User owner =
+        userRepository
+            .findByUsername(taskDto.getCreatedBy())
+            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    Project project =
+        projectRepository
+            .findByTitle(taskDto.getProject())
+            .orElseThrow(() -> new ResourceNotFoundException("Project not found"));
+    TasksStatus status =
+        taskStatusRepository
+            .findByStatus(ETaskStatus.findValue(taskDto.getStatus()))
+            .orElseThrow(
+                () -> new ResourceNotFoundException("Status not found: " + task.getStatus()));
+    TaskPriority priority =
+        taskPriorityRepository
+            .findByPriority(ETaskPriority.findValue(taskDto.getPriority()))
+            .orElseThrow(
+                () ->
+                    new ResourceNotFoundException("Priority not found :" + taskDto.getPriority()));
     task.setTitle(taskDto.getTitle());
     task.setDescription(taskDto.getDescription());
     task.setCreatedBy(owner);
@@ -86,12 +101,7 @@ public class TaskService implements ITaskService {
   public List<TaskDto> getUserTasks(Long userId) {
     User user = userRepository.findById(userId).orElseThrow();
     List<Task> tasks = taskRepository.getUserTasks(user.getId());
-<<<<<<< HEAD
     return taskMapper.toDtoList(tasks);
-=======
-    List<TaskDto> taskDtoList = taskMapper.toDtoList(tasks);
-    return taskDtoList;
->>>>>>> origin/main
   }
 
   @Override
@@ -106,8 +116,17 @@ public class TaskService implements ITaskService {
   @Override
   public TaskDto update(TaskDto taskDto) {
     Task t = taskRepository.findById(taskDto.getId()).orElseThrow();
-    TasksStatus status = taskStatusRepository.findByStatus(ETaskStatus.findValue(taskDto.getStatus())).orElseThrow(() -> new ResourceNotFoundException("Status not found: "+ taskDto.getStatus()));
-    TaskPriority priority = taskPriorityRepository.findByPriority(ETaskPriority.findValue(taskDto.getPriority())).orElseThrow(() -> new ResourceNotFoundException("Priority not found :" + taskDto.getPriority()));
+    TasksStatus status =
+        taskStatusRepository
+            .findByStatus(ETaskStatus.findValue(taskDto.getStatus()))
+            .orElseThrow(
+                () -> new ResourceNotFoundException("Status not found: " + taskDto.getStatus()));
+    TaskPriority priority =
+        taskPriorityRepository
+            .findByPriority(ETaskPriority.findValue(taskDto.getPriority()))
+            .orElseThrow(
+                () ->
+                    new ResourceNotFoundException("Priority not found :" + taskDto.getPriority()));
     t.setDescription(taskDto.getDescription());
     t.setTitle(taskDto.getTitle());
     t.setTaskPriority(priority);

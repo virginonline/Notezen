@@ -17,6 +17,7 @@ export const addTask = async (task: Task) => {
             priority: task.priority
         }
     })
+    return response;
 }
 export const editTask = async (task: Task) => {
     const user = await getCurrentUserFromServer();
