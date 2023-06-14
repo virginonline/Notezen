@@ -28,13 +28,12 @@ export type ProjectStatus = {
 }
 export type TaskStatus =  ProjectStatus;
 export type Priority = TaskStatus;
-
 export type Task = {
-    id:number | null,
+    id:number,
     title:string,
-    description: string,
+    description:string,
     status:string,
-    priority:string,
+    priority?:string,
     project: string,
     created_by:string,
     assigned_to?:string,

@@ -1,7 +1,7 @@
 import {Editor} from "@/component/editor";
-import {getTask} from "@/lib/api/task";
 import {getProjects} from "@/lib/api/project";
 import {getCurrentUserFromServer} from "@/lib/session";
+import {getTask} from "@/lib/api/task";
 
 interface EditorPageProps {
     params: { taskId: string }
