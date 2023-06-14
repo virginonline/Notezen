@@ -4,7 +4,7 @@ import {getCurrentUserFromServer} from "@/lib/session";
 
 //TODO
 // rewrite fo store
-export const addTask = async ({title, description, status, priority, project, author, expiration_date } :  Task) => {
+export const addTask = async ({title, description, status, priority, project, created_by, expiration_date } :  Task) => {
     const user = await getCurrentUserFromServer();
     return api.post(`tasks/new`, {
         headers: {
@@ -15,7 +15,7 @@ export const addTask = async ({title, description, status, priority, project, au
             description: description,
             status: status,
             priority: priority,
-            created_by: author,
+            created_by: created_by,
             project: project,
             expiration_date: expiration_date,
         }
@@ -31,6 +31,7 @@ export const editTask = async (task: Task) => {
 
         }
     })
+    return response;
 }
 export const deleteTask = async (taskId: string) => {
     const user = await getCurrentUserFromServer();
@@ -40,7 +41,7 @@ export const deleteTask = async (taskId: string) => {
         }
     });
 }
-export const delegateTask = async (taskId: string, assignedUsername: string) => {
+export const delegateTask = async (taskId: number, assignedUsername: string) => {
     const user = await getCurrentUserFromServer();
     return api.patch(`tasks/delegate/${taskId}?username=${assignedUsername}`, {
         headers: {

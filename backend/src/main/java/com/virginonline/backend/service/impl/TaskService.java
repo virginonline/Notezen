@@ -86,8 +86,7 @@ public class TaskService implements ITaskService {
   public List<TaskDto> getUserTasks(Long userId) {
     User user = userRepository.findById(userId).orElseThrow();
     List<Task> tasks = taskRepository.getUserTasks(user.getId());
-    List<TaskDto> taskDtoList = taskMapper.toDtoList(tasks);
-    return taskDtoList;
+    return taskMapper.toDtoList(tasks);
   }
 
   @Override

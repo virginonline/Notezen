@@ -1,7 +1,7 @@
 "use client";
 import "@/styles/editor.css";
 import {useCallback, useEffect, useRef, useState} from "react";
-import EditorJS from "@editorjs/editorjs";
+import EditorJS, {OutputData} from "@editorjs/editorjs";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useRouter} from "next/navigation";
 import {useForm} from "react-hook-form";
@@ -38,7 +38,7 @@ export function Editor({task, availableProjects}: EditorProps) {
 
     const {user} = useCurrentUser();
 
-    const [project, setProjects] = useState<Project[]>(availableProjects || []);
+    const [project] = useState<Project[]>(availableProjects || []);
 
     const router = useRouter();
     if (!user) {
@@ -50,22 +50,21 @@ export function Editor({task, availableProjects}: EditorProps) {
         resolver: zodResolver(taskSchema),
     });
     const [isMounted, setIsMounted] = useState<boolean>(false);
-
+    const [initData] = useState<OutputData>(JSON.parse(task?.description || ''))
     const [isSaving, setIsSaving] = useState<boolean>(false);
 
     useEffect(() => {
 
         form.setValue('author', user.username)
-
+        
         if (task !== undefined && task !== null) {
-            form.setValue('author', task.author)
+            form.setValue('author', task.created_by)
             form.setValue('status', task.status)
             form.setValue('priority', task.priority)
             form.setValue('project', task.project)
             form.setValue('title', task.title)
         }
-
-    })
+    }, [form, user.username, task])
     const initEditor = useCallback(async () => {
         const EditorJS = (await import("@editorjs/editorjs")).default;
         const Header = (await import("@editorjs/header")).default;
@@ -78,7 +77,7 @@ export function Editor({task, availableProjects}: EditorProps) {
                 },
                 placeholder: "Напишите о чем будет задача",
                 inlineToolbar: true,
-                data: JSON.parse(task!.description) || '',
+                data: initData,
                 tools: {
                     header: Header,
                 },
@@ -101,10 +100,12 @@ export function Editor({task, availableProjects}: EditorProps) {
     }, [isMounted, initEditor]);
 
     async function onSubmit(data: FormData) {
+        setIsSaving(true);
         const blocks = await ref?.current?.save();
 
         const task: Task = {
-            author: data.author,
+            id: null,
+            created_by: data.author,
             project: data.project,
             status: data.status,
             priority: data.priority,
@@ -113,14 +114,15 @@ export function Editor({task, availableProjects}: EditorProps) {
             title: data.title,
         }
 
-        console.log(task)
-
         const response = await addTask(task)
+
         if (response.ok) {
             toast({
                 title: 'Задача добавлена в проект!',
             })
         }
+        setIsSaving(false);
+
     }
 
     if (!isMounted) {

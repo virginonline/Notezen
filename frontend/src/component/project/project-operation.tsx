@@ -3,7 +3,7 @@
 import {Project, ProjectStatus} from "@/lib/types/type";
 import {useRouter} from "next/navigation";
 import React, {useEffect, useState} from "react";
-import { toast } from "@/component/ui/use-toast"
+import {toast} from "@/component/ui/use-toast"
 import {Icons} from "@/component/ui/icons";
 import {
     DropdownMenu,
@@ -13,11 +13,14 @@ import {
     DropdownMenuTrigger
 } from "@/component/ui/dropdown-menu";
 import {
-    AlertDialog, AlertDialogAction, AlertDialogCancel,
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
     AlertDialogFooter,
-    AlertDialogHeader, AlertDialogTitle
+    AlertDialogHeader,
+    AlertDialogTitle
 } from "@/component/ui/alert-dialog";
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle} from "@/component/ui/dialog";
 import {Button} from "@/component/ui/button";
@@ -32,30 +35,30 @@ interface ProjectOperationProps {
     project: Pick<Project, "id" | "title" | "status" | "description" | "owner">
 }
 
-export function ProjectOperation({project} : ProjectOperationProps) {
+export function ProjectOperation({project}: ProjectOperationProps) {
     const {user} = useCurrentUser();
     const router = useRouter();
     const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false)
     const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false)
     const [showEditDialog, setShowEditDialog] = useState<boolean>(false);
     const [status, setStatus] = useState<ProjectStatus>({
-        label:'',
-        value:'',
+        label: '',
+        value: '',
     });
     useEffect(() => {
         const value = ProjectStatuses.find(pr => pr.value == project.status);
         setStatus(value || {
-            label:'',
-            value:'',
+            label: '',
+            value: '',
         });
-        console.log(status)
     }, [project.status, status])
     return (
         <>
             <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
                 <DropdownMenu>
-                    <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md border transition-colors hover:bg-muted">
-                        <Icons.ellipsis className="h-4 w-4" />
+                    <DropdownMenuTrigger
+                        className="flex h-8 w-8 items-center justify-center rounded-md border transition-colors hover:bg-muted">
+                        <Icons.ellipsis className="h-4 w-4"/>
                         <span className="sr-only">Open</span>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
@@ -69,7 +72,7 @@ export function ProjectOperation({project} : ProjectOperationProps) {
                         >
                             Редактировать проект
                         </DropdownMenuItem>
-                        <DropdownMenuSeparator />
+                        <DropdownMenuSeparator/>
                         <DropdownMenuItem
                             className="flex cursor-pointer items-center text-destructive focus:text-destructive"
                             disabled={project.owner != user.username}
@@ -95,10 +98,11 @@ export function ProjectOperation({project} : ProjectOperationProps) {
                     />
                     <Select onValueChange={(event) => {
                         const st = ProjectStatuses.find((ps) => ps.value == event)
-                        setStatus(prevState => st || prevState)}} value={status?.value}>
-                            <SelectTrigger className="mb-3">
-                                <SelectValue placeholder="Статус проекта"/>
-                            </SelectTrigger>
+                        setStatus(prevState => st || prevState)
+                    }} value={status?.value}>
+                        <SelectTrigger className="mb-3">
+                            <SelectValue placeholder="Статус проекта"/>
+                        </SelectTrigger>
                         <SelectContent>
                             {ProjectStatuses.map((status) => (
                                 <SelectItem key={status.value}
@@ -130,7 +134,7 @@ export function ProjectOperation({project} : ProjectOperationProps) {
                                 event.preventDefault()
                                 setIsDeleteLoading(true)
                                 const response = await deleteProject(project.id)
-
+                                //todo change
                                 const deleted = true;
 
                                 if (response.ok) {
@@ -147,9 +151,9 @@ export function ProjectOperation({project} : ProjectOperationProps) {
                             className="bg-red-600 focus:ring-red-600"
                         >
                             {isDeleteLoading ? (
-                                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                                <Icons.spinner className="mr-2 h-4 w-4 animate-spin"/>
                             ) : (
-                                <Icons.trash className="mr-2 h-4 w-4" />
+                                <Icons.trash className="mr-2 h-4 w-4"/>
                             )}
                             <span>Удалить</span>
                         </AlertDialogAction>
