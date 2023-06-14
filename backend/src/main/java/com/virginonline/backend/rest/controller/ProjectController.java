@@ -18,6 +18,10 @@ public class ProjectController {
 
   private final ProjectService projectService;
 
+  @PatchMapping("/edit/{projectId}")
+  public ProjectDto update(@PathVariable("projectId") Long id,@RequestBody ProjectDto project) {
+    return projectService.update(id,project);
+  }
   @PostMapping("/new")
   public ProjectDto createProject(@RequestBody ProjectDto project) {
       return projectService.addProject(project);

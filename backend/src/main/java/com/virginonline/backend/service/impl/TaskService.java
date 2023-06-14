@@ -99,6 +99,7 @@ public class TaskService implements ITaskService {
     comment.setCreatedBy(user);
     comment.setContent(comment.getContent());
     comment.setCreatedDate(Timestamp.from(Instant.now()));
+    log.info("Comment {}", comment.getContent());
     return commentMapper.toDto(commentRepository.save(comment));
   }
 

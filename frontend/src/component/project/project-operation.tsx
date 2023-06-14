@@ -28,7 +28,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {ProjectStatuses} from "@/component/data";
 import {useCurrentUser} from "@/hooks/useCurrentUser";
 import TextareaAutosize from "react-textarea-autosize";
-import {deleteProject} from "@/lib/api/project";
+import {deleteProject, editProject} from "@/lib/api/project";
 
 
 interface ProjectOperationProps {
@@ -38,6 +38,7 @@ interface ProjectOperationProps {
 export function ProjectOperation({project}: ProjectOperationProps) {
     const {user} = useCurrentUser();
     const router = useRouter();
+    const [description, setDescription] = useState<string>(project.description)
     const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false)
     const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false)
     const [showEditDialog, setShowEditDialog] = useState<boolean>(false);
@@ -91,15 +92,13 @@ export function ProjectOperation({project}: ProjectOperationProps) {
                         <DialogTitle>Редактирование проекта</DialogTitle>
                     </DialogHeader>
                     <TextareaAutosize id="description"
-                                      defaultValue={project.description || ''}
+                                      onChange={(event) => setDescription(event.target.value)}
+                                      defaultValue={description || ''}
                                       placeholder='Описание проекта'
                                       className="resize-none appearance-none overflow-hidden rounded-md border border-input bg-transparent px-3 py-2 focus:outline-none"
 
                     />
-                    <Select onValueChange={(event) => {
-                        const st = ProjectStatuses.find((ps) => ps.value == event)
-                        setStatus(prevState => st || prevState)
-                    }} value={status?.value}>
+                    <Select value={status?.value}>
                         <SelectTrigger className="mb-3">
                             <SelectValue placeholder="Статус проекта"/>
                         </SelectTrigger>
@@ -111,8 +110,9 @@ export function ProjectOperation({project}: ProjectOperationProps) {
                         </SelectContent>
                     </Select>
                     <DialogFooter>
-                        <Button onClick={() => {
-                            //todo patch
+                        <Button onClick={ async () => {
+                            console.log(status)
+                            setShowEditDialog(false)
                         }}>Сохранить изменения</Button>
                     </DialogFooter>
                 </DialogContent>

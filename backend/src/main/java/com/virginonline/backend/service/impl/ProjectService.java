@@ -12,6 +12,7 @@ import com.virginonline.backend.repository.ProjectRepository;
 import com.virginonline.backend.repository.ProjectStatusRepository;
 import com.virginonline.backend.repository.UserRepository;
 import com.virginonline.backend.service.IProjectService;
+import jakarta.persistence.criteria.CriteriaBuilder.In;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
@@ -70,10 +71,12 @@ public class ProjectService implements IProjectService {
   }
 
   @Override
-  public ProjectDto update(ProjectDto project) {
-    Project p = projectRepository.findById(project.getId()).orElseThrow();
+  public ProjectDto update(Long id,ProjectDto project) {
+    Project p = projectRepository.findById(id).orElseThrow();
     p.setDescription(project.getDescription());
-    p.setTitle(project.getTitle());
+    ProjectsStatus ps = projectStatusRepository.findByStatus(EProjectStatus.findValue(project.getStatus()));
+    p.setProjectStatus(ps);
+    p.setUpdatedDate(Timestamp.from(Instant.now()));
     return mapper.toDto(projectRepository.save(p));
   }
 

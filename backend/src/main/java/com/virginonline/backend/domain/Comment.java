@@ -6,9 +6,13 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "comments")
+@Getter
+@Setter
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,42 +32,4 @@ public class Comment {
 
     @Column(name = "content")
     private String content;
-    public void setContent(String content) {
-        this.content = content;
-    }
-    public String getContent() {
-        return content;
-    }
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Task getTask() {
-        return task;
-    }
-
-    public void setTask(Task task) {
-        this.task = task;
-    }
-
-    public Timestamp getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Timestamp createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public User getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(User createdBy) {
-        this.createdBy = createdBy;
-    }
-
 }

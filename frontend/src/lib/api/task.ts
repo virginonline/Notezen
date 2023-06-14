@@ -14,7 +14,10 @@ export const addTask = async (task: Task) => {
             title: task.title,
             description : task.description,
             status : task.status,
-            priority: task.priority
+            priority: task.priority,
+            project: task.project,
+            created_by: task.created_by,
+            expiration_date: task.expiration_date
         }
     })
     return response;

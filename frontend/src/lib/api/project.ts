@@ -20,14 +20,13 @@ export const addProject = async (title: string, description: string = '', status
         }
     })
 }
-export const editProject = async (title: string, description: string = '', status: string) => {
+export const editProject = async (projectId : number, description: string = '', status: string) => {
     const user = await getCurrentUserFromServer();
-    return api.patch(`projects/edit`, {
+    return api.patch(`projects/edit/${projectId}`, {
         headers: {
             Authorization: `Bearer ${user.token}`
         },
         json: {
-            title: title,
             description: description,
             status: status,
             owner: user.username

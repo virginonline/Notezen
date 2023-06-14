@@ -15,7 +15,7 @@ public interface IProjectService {
 
   Boolean removeProject(Long projectId);
 
-  ProjectDto update(ProjectDto project);
+  ProjectDto update(Long id,ProjectDto project);
 
   List<ProjectPreviewDto> getProjectPreview(Long userId);
   List<ProjectDto> getAuthorProject(Long userId);
