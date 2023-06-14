@@ -97,12 +97,11 @@ public class TaskService implements ITaskService {
     Comment comment = new Comment();
     comment.setTask(task);
     comment.setCreatedBy(user);
-    comment.setContent(comment.getContent());
+    comment.setContent(commentDto.getContent());
     comment.setCreatedDate(Timestamp.from(Instant.now()));
     log.info("Comment {}", comment.getContent());
     return commentMapper.toDto(commentRepository.save(comment));
   }
-
   @Override
   public List<CommentDto> getComments(Long taskId) {
     List<Comment> comments = commentRepository.getComment(taskId);
