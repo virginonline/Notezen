@@ -12,6 +12,7 @@ interface CommentsProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 export function Comments({task, className} : CommentsProps) {
     const [comments, setComments] = useState<Comment[]>([])
+
     useEffect(() => {
         (async () => {
             const fetchedComments = await getComments(task.id!)
@@ -19,7 +20,7 @@ export function Comments({task, className} : CommentsProps) {
         })();
     })
     return(
-        <div className={cn('text-foregrounds',className)}>
+        <div className={cn('relative w-full max-w-[550px]',className)}>
             <p className="text-lg text-muted-foreground">Комментарии</p>
             <br/>
             {comments.map((comment) => (

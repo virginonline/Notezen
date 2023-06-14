@@ -1,4 +1,4 @@
-import {Task, User} from "@/lib/types/type";
+import {Task, TaskPreview, User} from "@/lib/types/type";
 import {api, HTTPError} from "@/lib/api";
 import { getCurrentUserFromServer} from "@/lib/session";
 
@@ -74,7 +74,16 @@ export const getTask = async (taskId : string) : Promise<Task> => {
     }
     return await response.json();
 }
-export const getPreviewTasks = async (userId: string) => {
-
+export const getPreviewTasks = async () : Promise<TaskPreview[]> => {
+    const user = await getCurrentUserFromServer();
+    const response = await api.get(`tasks/preview/${user.id}`, {
+        headers: {
+            Authorization: `Bearer ${user.token}`
+        }
+    });
+    if (!response.ok) {
+        new HTTPError(`Failed fetch tasks with}`)
+    }
+    return await response.json();
 }
 

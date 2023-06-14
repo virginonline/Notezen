@@ -1,8 +1,8 @@
 package com.virginonline.backend.repository;
 
 import com.virginonline.backend.domain.task.Task;
-import com.virginonline.backend.domain.user.User;
 import java.time.LocalDateTime;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -24,4 +24,8 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
   @Query("select t from Task t where t.expirationDate between current_time and :endOfMonth")
   List<Task> getTaskByMonth(LocalDateTime endOfMonth);
+
+    @Query("select t from Task t where t.createdBy.id = :userId or t.assignedTo.id = :userId order by t.expirationDate asc")
+    List<Task> findExpiration(Long userId);
+
 }

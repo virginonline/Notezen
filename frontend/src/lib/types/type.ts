@@ -45,7 +45,7 @@ export type TaskPreview = {
     id:number,
     title:string
     description:string,
-    expirationDate?: Date
+    expiration_date?: Date
 }
 
 export type ProjectPreview = {

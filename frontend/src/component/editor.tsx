@@ -50,7 +50,7 @@ export function Editor({task, availableProjects}: EditorProps) {
         resolver: zodResolver(taskSchema),
     });
     const [isMounted, setIsMounted] = useState<boolean>(false);
-    const [initData] = useState<OutputData>(JSON.parse(task?.description || ''))
+    const [initData] = useState<OutputData>()
     const [isSaving, setIsSaving] = useState<boolean>(false);
 
     useEffect(() => {

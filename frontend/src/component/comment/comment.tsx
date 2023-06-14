@@ -6,7 +6,7 @@ interface CommentProps {
 }
 export function CommentItem({comment} : CommentProps) {
     return(
-        <div className="space-y-8 border w-[200px] rounded">
+        <div className="space-y-8 w-full p-4 border rounded">
             <div className="flex items-center">
                 <Avatar className="h-9 w-9">
                     <AvatarFallback>{comment.author.slice(0,2)}</AvatarFallback>

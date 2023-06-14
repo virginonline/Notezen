@@ -15,6 +15,8 @@ import {ProfileHeader} from "@/component/profile-header";
 import {ProjectPreviewItem} from "@/component/project/project-preview-item";
 import {welcomeScreen} from "@/lib/web/state/ui/welcome";
 import {getCurrentUserFromServer} from "@/lib/session";
+import {getPreviewTasks} from "@/lib/api/task";
+import {getPreviewProject} from "@/lib/api/project";
 
 
 
@@ -22,102 +24,31 @@ export function AchievementWidget() {
     //const [time, userWelcome] = await useWelcomeScreen();
     const [time, setTime] = useState('')
     const [greeting, setGreeting] = useState('');
+    const [taskPreview, setTaskPreview] = useState<TaskPreview[]>([])
+
     useEffect(() => {
         (async () => {
             const user = await getCurrentUserFromServer();
             const {greeting, welcome} = welcomeScreen();
-            setTime(greeting)
+            const tskPreview = await getPreviewTasks();
             setGreeting(welcome(user.username))
+            setTime(greeting)
+            setTaskPreview(tskPreview)
         })();
     }, [])
-    const tasks: TaskPreview[] = [
-        {
-            id: 1,
-            title: "Разработать ИС",
-            description: "Разработать конфигурацию",
-        },
-        {
-            id: 2,
-            title: "Рефакторинг сервиса пользователей",
-            description: "Выполнить рефакторинг сервиса пользователей",
-        },
-        {
-            id: 12,
-            title: "Рефакторинг сервиса пользователей",
-            description: "Выполнить рефакторинг сервиса пользователей",
-        },
-        {
-            id: 232,
-            title: "Рефакторинг сервиса пользователей",
-            description: "Выполнить рефакторинг сервиса пользователей",
-        },
-
-    ]
-    const projects: ProjectPreview[] = [
-        {
-            id: 1,
-            title: "Проект 1",
-            taskCount: "100"
-        }
-    ]
-
     return (
         <div className='grid items-start gap-8'>
             <ProfileHeader heading={time} text={greeting}/>
-            <div
-                className='
-          rounded-md
-          border
-          p-6
-          flex gap-6 md:gap-10
-        '>
-                <Select>
-                    <SelectTrigger className='
-                   h-[25px]
-                   w-[200px]
-                '>
-                        <SelectValue placeholder='Выбрать промежуток'/>
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                            <SelectLabel>Отображение статистики за</SelectLabel>
-                            <SelectItem value='WEEK'>За неделю</SelectItem>
-                            <SelectItem value='MONTH'>За месяц</SelectItem>
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
-                <div>
-                    Выполнено задач {100}
-                </div>
-                <div>
-                    Получено задач {6}
-                </div>
-            </div>
-            <div className='
-            grid
-            gap-4
-            grid-cols-2
-            mt-6
-            '>
+
                 <div className='
                 rounded
                 border
                 divide-border
                 '>
-                    {tasks.map((task) => (
+                    {taskPreview.map((task) => (
                         <TaskPreviewItem key={task.id} task={task}/>
                     ))}
                 </div>
-                <div className='
-                rounded
-                border
-                '
-                >
-                    {projects.map((project) => (
-                        <ProjectPreviewItem key={project.id} project={project}/>
-                    ))}
-                </div>
-            </div>
         </div>
     )
 }

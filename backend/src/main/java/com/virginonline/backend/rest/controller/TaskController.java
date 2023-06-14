@@ -53,20 +53,19 @@ public class TaskController {
   }
   @GetMapping("/{taskId}/comments")
   public List<CommentDto> getCommentsTask(@PathVariable Long taskId) {
-    // TODO
-    // return Comments dtos
-    return null;
-  }
-  @PostMapping("/{taskId}/add-comment")
-  public List<CommentDto> addComment(@PathVariable Long taskId, @RequestBody CommentDto commentDto) {
-    // TODO
-    // return Comments dtos
-    return null;
+    return taskService.getComments(taskId);
   }
 
+  @PostMapping("/{taskId}/add-comment")
+  public CommentDto addComment(@PathVariable Long taskId, @RequestBody CommentDto commentDto) {
+    log.info("Comment {}", commentDto);
+    return taskService.addComment(taskId, commentDto);
+  }
+
+  //add request param filter
   @GetMapping("/preview/{userId}")
-  public List<TaskPreviewDto> previewList(@PathVariable Long userId, @RequestParam String filter) {
-    return taskService.getTaskPreview(userId, filter);
+  public List<TaskPreviewDto> previewList(@PathVariable Long userId) {
+    return taskService.getTaskPreview(userId);
   }
 
   @PatchMapping("/delegate/{taskId}")

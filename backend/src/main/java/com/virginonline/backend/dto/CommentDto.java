@@ -1,6 +1,7 @@
 package com.virginonline.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.sql.Timestamp;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,5 +16,5 @@ public class CommentDto implements Serializable {
   private Long taskId;
   private String content;
   @JsonProperty("created_at")
-  private Instant createdDate;
+  private Timestamp createdDate;
 }

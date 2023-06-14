@@ -18,7 +18,7 @@ export default async function TaskPage({ params }: { params: { taskId: string } 
     }
     const task = await fetchTask(params.taskId);
     return(
-        <div className='grid'>
+        <div className='grid grid-rows-3 grid-flow-col gap-4'>
             <TaskPreview
                 className='row-end-3 row-span-2'
                 task={task}

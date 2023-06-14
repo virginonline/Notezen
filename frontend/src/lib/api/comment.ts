@@ -19,7 +19,7 @@ export const getComments = async (taskId: number) : Promise<Comment[]> => {
 
 export const addComment = async (taskId : number, content : string) => {
     const user = await getCurrentUserFromServer();
-    const response = await api.get(`tasks/${taskId}/add-comment`, {
+    const response = await api.post(`tasks/${taskId}/add-comment`, {
         headers: {
             Authorization: `Bearer ${user.token}`
         },

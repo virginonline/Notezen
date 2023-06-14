@@ -1,5 +1,6 @@
 package com.virginonline.backend.service.impl;
 
+import com.virginonline.backend.domain.Comment;
 import com.virginonline.backend.domain.project.Project;
 import com.virginonline.backend.domain.task.Task;
 import com.virginonline.backend.domain.task.TaskPriority;
@@ -7,10 +8,13 @@ import com.virginonline.backend.domain.task.TasksStatus;
 import com.virginonline.backend.domain.task.enums.ETaskPriority;
 import com.virginonline.backend.domain.task.enums.ETaskStatus;
 import com.virginonline.backend.domain.user.User;
+import com.virginonline.backend.dto.CommentDto;
 import com.virginonline.backend.dto.TaskDto;
 import com.virginonline.backend.dto.TaskPreviewDto;
 import com.virginonline.backend.exception.ResourceNotFoundException;
+import com.virginonline.backend.mapper.CommentMapper;
 import com.virginonline.backend.mapper.TaskMapper;
+import com.virginonline.backend.repository.CommentRepository;
 import com.virginonline.backend.repository.ProjectRepository;
 import com.virginonline.backend.repository.TaskPriorityRepository;
 import com.virginonline.backend.repository.TaskRepository;
@@ -39,6 +43,8 @@ public class TaskService implements ITaskService {
   private final TaskStatusRepository taskStatusRepository;
   private final TaskPriorityRepository taskPriorityRepository;
   private final TaskRepository taskRepository;
+  private final CommentRepository commentRepository;
+  private final CommentMapper commentMapper;
   private final ProjectRepository projectRepository;
   private final UserRepository userRepository;
   private final TaskMapper taskMapper;
@@ -83,6 +89,25 @@ public class TaskService implements ITaskService {
     log.info("task saved {}", t);
     return taskMapper.toDto(t);
   }
+
+  @Override
+  public CommentDto addComment(Long taskId, CommentDto commentDto) {
+    Task task = taskRepository.findById(taskId).orElseThrow();
+    User user = userRepository.findByUsername(commentDto.getAuthor()).orElseThrow();
+    Comment comment = new Comment();
+    comment.setTask(task);
+    comment.setCreatedBy(user);
+    comment.setContent(comment.getContent());
+    comment.setCreatedDate(Timestamp.from(Instant.now()));
+    return commentMapper.toDto(commentRepository.save(comment));
+  }
+
+  @Override
+  public List<CommentDto> getComments(Long taskId) {
+    List<Comment> comments = commentRepository.getComment(taskId);
+    return commentMapper.toDtoList(comments);
+  }
+
 
   @Override
   public TaskDto assignTask(Long taskId, String username) {
@@ -140,15 +165,10 @@ public class TaskService implements ITaskService {
   }
 
   @Override
-  public List<TaskPreviewDto> getTaskPreview(Long userId, String filter) {
-    LocalDateTime now = LocalDateTime.now();
-    List<Task> tasks;
-    if (filter.equals("WEEK")) {
-      tasks =
-          taskRepository.getTaskByWeek(now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY)));
-    } else {
-      tasks = taskRepository.getTaskByMonth(now.withDayOfMonth(now.getDayOfMonth()));
-    }
+  public List<TaskPreviewDto> getTaskPreview(Long userId) {
+    //LocalDateTime now = LocalDateTime.now();
+
+    List<Task> tasks = taskRepository.findExpiration(userId);
     return tasks.stream()
         .map(
             task ->

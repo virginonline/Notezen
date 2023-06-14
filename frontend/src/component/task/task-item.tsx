@@ -25,7 +25,6 @@ export function TaskItem({task}: TaskItemProps) {
 
     }, [task.status, task.priority])
     const dateStr = new Date(task.expiration_date!);
-    console.log(task.created_by)
     return (
         <Card>
             <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">

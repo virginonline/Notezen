@@ -4,6 +4,7 @@ import com.virginonline.backend.domain.task.Task;
 import com.virginonline.backend.domain.user.User;
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 
 @Entity
@@ -19,12 +20,20 @@ public class Comment {
     private Task task;
 
     @Column(name = "created_date", nullable = false)
-    private Instant createdDate;
+    private Timestamp createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "created_by", nullable = false)
     private User createdBy;
 
+    @Column(name = "content")
+    private String content;
+    public void setContent(String content) {
+        this.content = content;
+    }
+    public String getContent() {
+        return content;
+    }
     public Long getId() {
         return id;
     }
@@ -41,11 +50,11 @@ public class Comment {
         this.task = task;
     }
 
-    public Instant getCreatedDate() {
+    public Timestamp getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Instant createdDate) {
+    public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
 
