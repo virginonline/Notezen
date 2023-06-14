@@ -1,6 +1,3 @@
-import {Editor} from "@/component/editor";
-import {getProjects} from "@/lib/api/project";
-import {getCurrentUserFromServer} from "@/lib/session";
 import {getTask} from "@/lib/api/task";
 import {Comments} from "@/component/comment/comments-list";
 import {TaskPreview} from "@/component/task/task-preview-page";
@@ -21,11 +18,13 @@ export default async function TaskPage({ params }: { params: { taskId: string } 
     }
     const task = await fetchTask(params.taskId);
     return(
-        <div>
+        <div className='grid'>
             <TaskPreview
+                className='row-end-3 row-span-2'
                 task={task}
             />
             <Comments
+                className='row-end-3 row-span-2'
                 task={task}
             />
         </div>

@@ -14,7 +14,7 @@ export const getComments = async (taskId: number) : Promise<Comment[]> => {
         throw new HTTPError(`Fetch error: ${response.statusText}`);
     }
 
-    return await response.json();
+    return [];
 }
 
 export const addComment = async (taskId : number, content : string) => {

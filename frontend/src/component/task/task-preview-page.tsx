@@ -3,12 +3,17 @@ import {Task} from "@/lib/types/type";
 import {useCallback, useEffect, useRef, useState} from "react";
 import EditorJS, {OutputData} from "@editorjs/editorjs";
 import TextareaAutosize from "react-textarea-autosize";
+import * as React from "react";
+import {cn} from "@/lib/utils";
 
-interface TaskPreviewProps {
+
+interface TaskPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
     task?: Task,
+
 }
 
-export function TaskPreview({task}: TaskPreviewProps) {
+
+export function TaskPreview({task, className}: TaskPreviewProps) {
     const ref = useRef<EditorJS>();
     const [initData] = useState<OutputData>(JSON.parse(task?.description || ''))
     const [isMounted, setIsMounted] = useState<boolean>(false);
@@ -48,13 +53,13 @@ export function TaskPreview({task}: TaskPreviewProps) {
         }
     }, [isMounted, initEditor]);
     return (
-        <div>
+        <div className={cn(className)}>
             <TextareaAutosize
                 autoFocus
                 id="title"
                 disabled={true}
                 defaultValue={task?.title}
-                className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
+                className="w-full text-center resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
             />
             <div id="editor" className="min-h-[500px]"/>
         </div>
