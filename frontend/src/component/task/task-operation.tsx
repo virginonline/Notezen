@@ -33,12 +33,11 @@ import {useCurrentUser} from "@/hooks/useCurrentUser";
 
 interface TaskOperationProps {
     taskId: number
-    author: string
     delegateUser?: string
 }
 
 
-export function TaskOperation({delegateUser, author, taskId}: TaskOperationProps) {
+export function TaskOperation({delegateUser, taskId}: TaskOperationProps) {
     const {user} = useCurrentUser();
     const router = useRouter();
     const [usr, setUsername] = useState<string>(delegateUser || '')
