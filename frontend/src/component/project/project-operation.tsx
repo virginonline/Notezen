@@ -134,20 +134,24 @@ export function ProjectOperation({project}: ProjectOperationProps) {
                                 event.preventDefault()
                                 setIsDeleteLoading(true)
                                 const response = await deleteProject(project.id)
-                                //todo change
-                                const deleted = true;
-
                                 if (response.ok) {
                                     toast({
                                         title: "Проект удален",
                                         description: "Вы удалили проект",
                                         variant: "destructive",
                                     })
-                                    setIsDeleteLoading(false)
-                                    setShowDeleteAlert(false)
-                                    router.refresh()
+                                } else {
+                                    toast({
+                                        title: 'Что-то пошло не так',
+                                        variant: "destructive",
+                                        description: 'Не удалось удалить проект'
+                                    })
                                 }
-                            }}
+                                setIsDeleteLoading(false)
+                                setShowDeleteAlert(false)
+                                router.refresh()
+                            }
+                            }
                             className="bg-red-600 focus:ring-red-600"
                         >
                             {isDeleteLoading ? (

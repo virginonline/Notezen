@@ -118,6 +118,7 @@ export function Editor({task, availableProjects}: EditorProps) {
             toast({
                 title: 'Задача добавлена в проект!',
             })
+            router.back()
         }
         setIsSaving(false);
 

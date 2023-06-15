@@ -47,7 +47,7 @@ public class TaskController {
   public TaskDto updateTask(@RequestBody TaskDto taskDto) {
     return taskService.update(taskDto);
   }
-  @DeleteMapping("{taskId}")
+  @DeleteMapping("/delete/{taskId}")
   public boolean deleteTask(@PathVariable Long taskId) {
     return taskService.removeTask(taskId);
   }

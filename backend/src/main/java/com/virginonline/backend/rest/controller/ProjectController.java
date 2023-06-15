@@ -43,4 +43,8 @@ public class ProjectController {
   public List<ProjectPreviewDto> previewList(@PathVariable("userId") Long userId) {
     return projectService.getProjectPreview(userId);
   }
+  @DeleteMapping("/delete/{projectId}")
+  public Boolean deleteProject(@PathVariable("projectId") Long projectId) {
+    return projectService.removeProject(projectId);
+  }
 }

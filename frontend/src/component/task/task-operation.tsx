@@ -26,21 +26,26 @@ import {Input} from "@/component/ui/input";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import Label from "@/component/ui/label";
-import {delegateTask} from "@/lib/api/task";
+import {delegateTask, deleteTask} from "@/lib/api/task";
+import {getCurrentUserFromServer} from "@/lib/session";
+import {useCurrentUser} from "@/hooks/useCurrentUser";
 
 
 interface TaskOperationProps {
     taskId: number
+    author: string
     delegateUser?: string
 }
 
 
-export function TaskOperation({delegateUser, taskId}: TaskOperationProps) {
+export function TaskOperation({delegateUser, author, taskId}: TaskOperationProps) {
+    const {user} = useCurrentUser();
     const router = useRouter();
     const [usr, setUsername] = useState<string>(delegateUser || '')
     const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false)
     const [showDelegateDialog, setShowDelegateDialog] = useState<boolean>(false)
     const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false)
+    const [showChangeStatusDialog,setShowChangeStatusDialog] = useState<boolean>(false)
 
     async function onSubmit() {
         const response = await delegateTask(taskId, usr);
@@ -65,14 +70,14 @@ export function TaskOperation({delegateUser, taskId}: TaskOperationProps) {
                     <DropdownMenuTrigger
                         className="flex h-8 w-8 items-center justify-center rounded-md border transition-colors hover:bg-muted">
                         <Icons.ellipsis className="h-4 w-4"/>
-                        <span className="sr-only">Open</span>
+                        <span className="sr-only">Открыть</span>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuItem onSelect={() => {
                             document.body.style.pointerEvents = ""
                         }}>
-                            <Link href={`/editor/${taskId}`} className="flex w-full">
-                                Редактировать
+                            <Link href={`task/${taskId}`} className="flex w-full">
+                                Открыть задачу
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator/>
@@ -84,6 +89,15 @@ export function TaskOperation({delegateUser, taskId}: TaskOperationProps) {
                             }}
                         >
                             Делегировать задачу
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                            className="flex cursor-pointer items-center"
+                            onSelect={() => {
+                                setShowDelegateDialog(true)
+                                document.body.style.pointerEvents = ""
+                            }}
+                        >
+                            Изменить статус задачи
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             className="flex cursor-pointer items-center text-destructive focus:text-destructive"
@@ -132,13 +146,24 @@ export function TaskOperation({delegateUser, taskId}: TaskOperationProps) {
                                 event.preventDefault()
                                 setIsDeleteLoading(true)
 
-                                const deleted = true;
+                                const deleted = await deleteTask(taskId);
 
-                                if (deleted) {
-                                    setIsDeleteLoading(false)
-                                    setShowDeleteAlert(false)
-                                    router.refresh()
+                                if (deleted.ok) {
+                                    toast({
+                                        title: "Задача удалена",
+                                        description: "Вы удалили задачу",
+                                        variant: "destructive",
+                                    })
+                                } else {
+                                    toast({
+                                        title: 'Что-то пошло не так',
+                                        variant: "destructive",
+                                        description: 'Не удалось удалить задачу'
+                                    })
                                 }
+                                setIsDeleteLoading(false)
+                                setShowDeleteAlert(false)
+                                router.refresh()
                             }}
                             className="bg-red-600 focus:ring-red-600"
                         >
